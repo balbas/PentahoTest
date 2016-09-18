@@ -80,7 +80,7 @@ public class DocumentosView extends javax.swing.JDialog {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jTextFieldImporteBase = new javax.swing.JTextField();
-        jTextFieldImporteDtos = new javax.swing.JTextField();
+        jTextFieldImporteDto = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jTextFieldImporteIva = new javax.swing.JTextField();
@@ -99,7 +99,7 @@ public class DocumentosView extends javax.swing.JDialog {
         jLabel8 = new javax.swing.JLabel();
         jLabelTotalNeto = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jLabelTotalDtos = new javax.swing.JLabel();
+        jLabelTotalDto = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -205,9 +205,9 @@ public class DocumentosView extends javax.swing.JDialog {
         jTextFieldImporteBase.setText("0,00");
         jTextFieldImporteBase.setEnabled(false);
 
-        jTextFieldImporteDtos.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jTextFieldImporteDtos.setText("0,00");
-        jTextFieldImporteDtos.setEnabled(false);
+        jTextFieldImporteDto.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTextFieldImporteDto.setText("0,00");
+        jTextFieldImporteDto.setEnabled(false);
 
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel12.setText("% I.V.A.:");
@@ -250,16 +250,16 @@ public class DocumentosView extends javax.swing.JDialog {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
                     .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextFieldImporteDtos)
+                    .addComponent(jTextFieldImporteDto)
                     .addComponent(jTextFieldImporteBase, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE))
                 .addGap(10, 10, 10)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE))
+                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 80, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jTextFieldImporteIva, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
@@ -289,7 +289,7 @@ public class DocumentosView extends javax.swing.JDialog {
                 .addGap(10, 10, 10)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(jTextFieldImporteDtos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldImporteDto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13)
                     .addComponent(jTextFieldImporteIva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
@@ -349,11 +349,11 @@ public class DocumentosView extends javax.swing.JDialog {
         jLabelTotalNeto.setForeground(java.awt.Color.blue);
         jLabelTotalNeto.setText("0,00");
 
-        jLabel9.setText("Total Dtos.:");
+        jLabel9.setText("Total Dto.:");
 
-        jLabelTotalDtos.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabelTotalDtos.setForeground(java.awt.Color.blue);
-        jLabelTotalDtos.setText("0,00");
+        jLabelTotalDto.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabelTotalDto.setForeground(java.awt.Color.blue);
+        jLabelTotalDto.setText("0,00");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -402,7 +402,7 @@ public class DocumentosView extends javax.swing.JDialog {
                         .addGap(10, 10, 10)
                         .addComponent(jLabel9)
                         .addGap(10, 10, 10)
-                        .addComponent(jLabelTotalDtos, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabelTotalDto, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButtonGrabarRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -449,7 +449,7 @@ public class DocumentosView extends javax.swing.JDialog {
                         .addComponent(jLabel8)
                         .addComponent(jLabelTotalNeto)
                         .addComponent(jLabel9)
-                        .addComponent(jLabelTotalDtos)))
+                        .addComponent(jLabelTotalDto)))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
@@ -497,6 +497,7 @@ public class DocumentosView extends javax.swing.JDialog {
             documento.setCliente(Integer.valueOf(idCliente[0]));
             documento.setObservaciones((!jTextAreaObservaciones.getText().equals("")) ? jTextAreaObservaciones.getText() : "");
             documento.setImporteBase((!jTextFieldImporteBase.getText().equals("")) ? Double.valueOf(jTextFieldImporteBase.getText().replace(',', '.')) : 0.0);
+            documento.setImporteDescuento((!jTextFieldImporteDto.getText().equals("")) ? Double.valueOf(jTextFieldImporteDto.getText().replace(',', '.')) : 0.0);
             documento.setPorcentajeIva((!jTextFieldPorcentajeIva.getText().equals("")) ? Double.valueOf(jTextFieldPorcentajeIva.getText().replace(',', '.')) : 0.0);
             documento.setImporteCuota((!jTextFieldImporteIva.getText().equals("")) ? Double.valueOf(jTextFieldImporteIva.getText().replace(',', '.')) : 0.0);
             documento.setImporteTotal((!jLabelImporteTotal.getText().equals("")) ? Double.valueOf(jLabelImporteTotal.getText().replace(',', '.')) : 0.0);
@@ -654,11 +655,11 @@ public class DocumentosView extends javax.swing.JDialog {
                         }
                     }                    
                     jLabelTotalNeto.setText(String.format("%.2f", totalNeto));
-                    jLabelTotalDtos.setText(String.format("%.2f", totalDtos));
+                    jLabelTotalDto.setText(String.format("%.2f", totalDtos));
                     
                     // Solapa de Totales
                     jTextFieldImporteBase.setText(String.format("%.2f", totalNeto));
-                    jTextFieldImporteDtos.setText(String.format("%.2f", totalDtos));
+                    jTextFieldImporteDto.setText(String.format("%.2f", totalDtos));
                     if (!jTextFieldPorcentajeIva.getText().equals("")) {
                         jTextFieldImporteIva.setText(String.format("%.2f", (totalNeto * Double.valueOf(jTextFieldPorcentajeIva.getText().replace(',', '.'))) / 100));
                         jLabelImporteTotal.setText(String.format("%.2f", totalNeto + Double.valueOf(jTextFieldImporteIva.getText().replace(',', '.'))));
@@ -727,9 +728,9 @@ public class DocumentosView extends javax.swing.JDialog {
             jTextAreaObservaciones.setText(documento.getObservaciones());
             // Importes y Totales
             jLabelTotalNeto.setText(String.format("%.2f", documento.getImporteBase()));
-            //jLabelTotalDtos.setText(String.format("%.2f", 0)); // Hay que grabar este dato en la tabla Documentos
+            jLabelTotalDto.setText(String.format("%.2f", documento.getImporteDescuento()));
             jTextFieldImporteBase.setText(String.format("%.2f", documento.getImporteBase()));
-            //jTextFieldImporteDtos.setText(String.format("%.2f", 0)); // Hay que grabar este dato en la tabla Documentos
+            jTextFieldImporteDto.setText(String.format("%.2f", documento.getImporteDescuento()));
             jTextFieldPorcentajeIva.setText(String.format("%.2f", documento.getPorcentajeIva()));
             jTextFieldImporteIva.setText(String.format("%.2f", documento.getImporteCuota()));
             jLabelImporteTotal.setText(String.format("%.2f", documento.getImporteTotal()));                    
@@ -815,7 +816,7 @@ public class DocumentosView extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelImporteTotal;
-    private javax.swing.JLabel jLabelTotalDtos;
+    private javax.swing.JLabel jLabelTotalDto;
     private javax.swing.JLabel jLabelTotalNeto;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -828,7 +829,7 @@ public class DocumentosView extends javax.swing.JDialog {
     private javax.swing.JTextField jTextFieldFormaPago;
     private javax.swing.JTextField jTextFieldId;
     private javax.swing.JTextField jTextFieldImporteBase;
-    private javax.swing.JTextField jTextFieldImporteDtos;
+    private javax.swing.JTextField jTextFieldImporteDto;
     private javax.swing.JTextField jTextFieldImporteIva;
     private javax.swing.JTextField jTextFieldNumeracion;
     private javax.swing.JTextField jTextFieldPorcentajeIva;

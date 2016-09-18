@@ -76,7 +76,7 @@
                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                       <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                      <Component id="jLabelTotalDtos" min="-2" pref="64" max="-2" attributes="0"/>
+                      <Component id="jLabelTotalDto" min="-2" pref="64" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="jButtonGrabarRegistro" min="-2" pref="130" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -134,7 +134,7 @@
                       <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabelTotalNeto" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabelTotalDtos" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabelTotalDto" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="20" max="32767" attributes="0"/>
@@ -343,12 +343,12 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jLabel11" pref="80" max="32767" attributes="0"/>
+                          <Component id="jLabel11" pref="0" max="32767" attributes="0"/>
                           <Component id="jLabel10" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jTextFieldImporteDtos" max="32767" attributes="0"/>
+                          <Component id="jTextFieldImporteDto" max="32767" attributes="0"/>
                           <Component id="jTextFieldImporteBase" pref="80" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
@@ -391,7 +391,7 @@
                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextFieldImporteDtos" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextFieldImporteDto" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jTextFieldImporteIva" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -425,7 +425,7 @@
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextFieldImporteDtos">
+            <Component class="javax.swing.JTextField" name="jTextFieldImporteDto">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="4"/>
                 <Property name="text" type="java.lang.String" value="0,00"/>
@@ -592,10 +592,10 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel9">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Total Dtos.:"/>
+        <Property name="text" type="java.lang.String" value="Total Dto.:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabelTotalDtos">
+    <Component class="javax.swing.JLabel" name="jLabelTotalDto">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="11" style="1"/>

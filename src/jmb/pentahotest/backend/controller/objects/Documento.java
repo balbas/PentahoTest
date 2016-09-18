@@ -29,13 +29,14 @@ public class Documento {
                 hora = resultSet.getString(4);
                 observaciones = resultSet.getString(5);
                 importeBase = resultSet.getDouble(6);
-                porcentajeIva = resultSet.getDouble(7);
-                importeCuota = resultSet.getDouble(8);
-                importeTotal = resultSet.getDouble(9);
-                formaPago = resultSet.getString(10);
-                tipo = resultSet.getInt(11);
-                empresa = resultSet.getInt(12);
-                cliente = resultSet.getInt(13);
+                importeDescuento = resultSet.getDouble(7);
+                porcentajeIva = resultSet.getDouble(8);
+                importeCuota = resultSet.getDouble(9);
+                importeTotal = resultSet.getDouble(10);
+                formaPago = resultSet.getString(11);
+                tipo = resultSet.getInt(12);
+                empresa = resultSet.getInt(13);
+                cliente = resultSet.getInt(14);
             }
         } catch (SQLException ex) {
             Logger.getLogger(Report.class.getName()).log(Level.SEVERE, null, ex);
@@ -49,12 +50,12 @@ public class Documento {
     
     public boolean insert() {
         queryManager = new QueryManager();
-        return queryManager.insertOrUpdate("insert into Documentos(id, numeracion, fecha, hora, observaciones, importe_base, porcentaje_iva, importe_cuota, importe_total, forma_pago, id_tipo, id_empresa, id_cliente) values(" + id + ", '" + numeracion + "', " + fecha + ", '" + hora + "', '" + observaciones + "', " + importeBase + ", " + porcentajeIva + ", " + importeCuota + ", " + importeTotal + ", '" + formaPago + "', " + tipo + ", " + empresa + ", " + cliente + ");");
+        return queryManager.insertOrUpdate("insert into Documentos(id, numeracion, fecha, hora, observaciones, importe_base, importe_descuento, porcentaje_iva, importe_cuota, importe_total, forma_pago, id_tipo, id_empresa, id_cliente) values(" + id + ", '" + numeracion + "', " + fecha + ", '" + hora + "', '" + observaciones + "', " + importeBase + ", " + importeDescuento + ", " + porcentajeIva + ", " + importeCuota + ", " + importeTotal + ", '" + formaPago + "', " + tipo + ", " + empresa + ", " + cliente + ");");
     }
     
     public boolean update() {
         queryManager = new QueryManager();
-        return queryManager.insertOrUpdate("update Documentos set numeracion = '" + numeracion + "', fecha = " + fecha + ", hora = '" + hora + "', observaciones = '" + observaciones + "', importe_base = " + importeBase + ", porcentaje_iva = " + porcentajeIva + ", importe_cuota = " + importeCuota + ", importe_total = " + importeTotal + ", forma_pago = '" + formaPago + "', id_tipo = " + tipo + ", id_empresa = " + empresa + ", id_cliente = " + cliente + " where id = " + id + ";");
+        return queryManager.insertOrUpdate("update Documentos set numeracion = '" + numeracion + "', fecha = " + fecha + ", hora = '" + hora + "', observaciones = '" + observaciones + "', importe_base = " + importeBase + ", importe_descuento = " + importeDescuento + "porcentaje_iva = " + porcentajeIva + ", importe_cuota = " + importeCuota + ", importe_total = " + importeTotal + ", forma_pago = '" + formaPago + "', id_tipo = " + tipo + ", id_empresa = " + empresa + ", id_cliente = " + cliente + " where id = " + id + ";");
     }
     
     public boolean delete() {
@@ -133,6 +134,14 @@ public class Documento {
     public void setImporteBase(double importeBase) {
         this.importeBase = importeBase;
     }
+    
+    public double getImporteDescuento() {
+        return importeDescuento;
+    }
+
+    public void setImporteDescuento(double importeDescuento) {
+        this.importeDescuento = importeDescuento;
+    }
 
     public double getPorcentajeIva() {
         return porcentajeIva;
@@ -200,6 +209,7 @@ public class Documento {
     private String hora;
     private String observaciones;
     private double importeBase;
+    private double importeDescuento;
     private double porcentajeIva;
     private double importeCuota;
     private double importeTotal;
