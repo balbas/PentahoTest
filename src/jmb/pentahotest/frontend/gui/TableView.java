@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import jmb.pentahotest.backend.model.QueryManager;
+import jmb.pentahotest.frontend.gui.tables.ClientesView;
 import jmb.pentahotest.frontend.gui.tables.DocumentosView;
 import jmb.pentahotest.frontend.gui.tables.ReportsView;
 
@@ -205,6 +206,11 @@ public class TableView extends javax.swing.JDialog {
                 new ReportsView(this, true, "").setVisible(true);
                 execute();
                 break;
+            
+            case "Clientes":
+                new ClientesView(this, true, "").setVisible(true);
+                execute();
+                break;
         }
     }//GEN-LAST:event_jButtonNuevoRegistroActionPerformed
 
@@ -217,6 +223,11 @@ public class TableView extends javax.swing.JDialog {
             
             case "Reports":
                 new ReportsView(this, true, jTextFieldSeleccion.getText()).setVisible(true);
+                execute();
+                break;
+            
+            case "Clientes":
+                new ClientesView(this, true, jTextFieldSeleccion.getText()).setVisible(true);
                 execute();
                 break;
         }

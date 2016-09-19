@@ -1,10 +1,80 @@
 package jmb.pentahotest.backend.controller.objects;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import jmb.pentahotest.backend.model.QueryManager;
+
 /**
  *
  * @author jmbalbas
  */
 public class Cliente {
+    
+    public Cliente() {}
+    
+    public Cliente select() {
+        queryManager = new QueryManager();
+        ResultSet resultSet = queryManager.execute("select * from Clientes where id = " + id + ";");
+        try {
+            while (resultSet.next()) {
+                nombre = resultSet.getString(2);
+                apellidos = resultSet.getString(3);
+                direccion = resultSet.getString(4);
+                cp = resultSet.getString(5);
+                localidad = resultSet.getString(6);
+                provincia = resultSet.getString(7);
+                pais = resultSet.getString(8);
+                documento = resultSet.getString(9);
+                telefono = resultSet.getString(10);
+                movil = resultSet.getString(11);
+                fax = resultSet.getString(12);
+                email = resultSet.getString(13);
+                web = resultSet.getString(14);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Report.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            queryManager.statementClose();
+            queryManager.connectionClose();
+        }
+        
+        return this;
+    }
+    
+    public boolean insert() {
+        queryManager = new QueryManager();
+        return queryManager.insertOrUpdate("insert into Clientes(id, nombre, apellidos, direccion, cp, localidad, provincia, pais, documento, telefono, movil, fax, email, web) values(" + id + ", '" + nombre + "', '" + apellidos + "', '" + direccion + "', '" + cp + "', '" + localidad + "', '" + provincia + "', '" + pais + "', '" + documento + "', '" + telefono + "', '" + movil + "', '" + fax + "', '" + email + "', '" + web + "');");
+    }
+    
+    public boolean update() {
+        queryManager = new QueryManager();
+        return queryManager.insertOrUpdate("update Cientes set nombre = '" + nombre + "', apellidos = '" + apellidos + "', direccion = '" + direccion + "', cp = '" + cp + "', localidad = '" + localidad + "', provincia = '" + provincia + "', pais = '" + pais + "', documento = '" + documento + "', telefono = '" + telefono + "', movil = '" + movil + "', fax = '" + fax + "', email = '" + email + "', web = '" + web + "' where id = " + id + ";");
+    }
+    
+    public boolean delete() {
+        return true;
+    }
+    
+    public int getNextId() {
+        int nextId = 0;
+        
+        queryManager = new QueryManager();
+        ResultSet resultSet = queryManager.execute("select max(id) as maxId from Clientes;");
+        try {
+            while (resultSet.next()) {
+                nextId = resultSet.getInt("maxId") + 1;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Report.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            queryManager.statementClose();
+            queryManager.connectionClose();
+        }
+        
+        return nextId;
+    }
 
     public int getId() {
         return id;
@@ -118,6 +188,7 @@ public class Cliente {
         this.web = web;
     }
     
+    private QueryManager queryManager;
     private int id;
     private String nombre;
     private String apellidos;

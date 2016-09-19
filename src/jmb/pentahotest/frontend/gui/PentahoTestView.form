@@ -386,7 +386,7 @@
                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                       <Component id="jButtonEjecutarReport" min="-2" pref="130" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jButtonEditarDocumento" min="-2" pref="130" max="-2" attributes="0"/>
+                      <Component id="jButtonVerDocumento" min="-2" pref="130" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jButtonNuevoDocumento" min="-2" pref="130" max="-2" attributes="0"/>
                       <EmptySpace pref="269" max="32767" attributes="0"/>
@@ -403,7 +403,7 @@
                           <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jTextFieldSeleccion" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jButtonEjecutarReport" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButtonEditarDocumento" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButtonVerDocumento" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jButtonConfiguracion" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jButtonNuevoDocumento" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -433,13 +433,13 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonEjecutarReportActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButtonEditarDocumento">
+            <Component class="javax.swing.JButton" name="jButtonVerDocumento">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Editar documento"/>
+                <Property name="text" type="java.lang.String" value="Ver documento"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonEditarDocumentoActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonVerDocumentoActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jButtonConfiguracion">

@@ -114,7 +114,7 @@ public class PentahoTestView extends javax.swing.JFrame {
                     target.setRowSelectionAllowed(true);
                     jTextFieldSeleccion.setText((String) jTableDocumentos.getValueAt(jTableDocumentos.rowAtPoint(e.getPoint()), 0));
                     jButtonEjecutarReport.setEnabled(true);
-                    jButtonEditarDocumento.setEnabled(true);
+                    jButtonVerDocumento.setEnabled(true);
                 } else {
                     target.setRowSelectionAllowed(false);
                 }
@@ -166,7 +166,7 @@ public class PentahoTestView extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jTextFieldSeleccion = new javax.swing.JTextField();
         jButtonEjecutarReport = new javax.swing.JButton();
-        jButtonEditarDocumento = new javax.swing.JButton();
+        jButtonVerDocumento = new javax.swing.JButton();
         jButtonConfiguracion = new javax.swing.JButton();
         jButtonNuevoDocumento = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -327,11 +327,11 @@ public class PentahoTestView extends javax.swing.JFrame {
             }
         });
 
-        jButtonEditarDocumento.setText("Editar documento");
-        jButtonEditarDocumento.setEnabled(false);
-        jButtonEditarDocumento.addActionListener(new java.awt.event.ActionListener() {
+        jButtonVerDocumento.setText("Ver documento");
+        jButtonVerDocumento.setEnabled(false);
+        jButtonVerDocumento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonEditarDocumentoActionPerformed(evt);
+                jButtonVerDocumentoActionPerformed(evt);
             }
         });
 
@@ -361,7 +361,7 @@ public class PentahoTestView extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addComponent(jButtonEjecutarReport, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonEditarDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonVerDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonNuevoDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 269, Short.MAX_VALUE)
@@ -376,7 +376,7 @@ public class PentahoTestView extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(jTextFieldSeleccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonEjecutarReport)
-                    .addComponent(jButtonEditarDocumento)
+                    .addComponent(jButtonVerDocumento)
                     .addComponent(jButtonConfiguracion)
                     .addComponent(jButtonNuevoDocumento))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -631,23 +631,23 @@ public class PentahoTestView extends javax.swing.JFrame {
     private void jTextFieldSeleccionFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldSeleccionFocusLost
         if (jTextFieldSeleccion.getText().equals("")) {
             jButtonEjecutarReport.setEnabled(false);
-            jButtonEditarDocumento.setEnabled(false);
+            jButtonVerDocumento.setEnabled(false);
         } else {
             jButtonEjecutarReport.setEnabled(true);
-            jButtonEditarDocumento.setEnabled(true);
+            jButtonVerDocumento.setEnabled(true);
         }
     }//GEN-LAST:event_jTextFieldSeleccionFocusLost
 
-    private void jButtonEditarDocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarDocumentoActionPerformed
+    private void jButtonVerDocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerDocumentoActionPerformed
         new DocumentosView(this, true, jTextFieldSeleccion.getText()).setVisible(true);
-    }//GEN-LAST:event_jButtonEditarDocumentoActionPerformed
+    }//GEN-LAST:event_jButtonVerDocumentoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonConfiguracion;
-    private javax.swing.JButton jButtonEditarDocumento;
     private javax.swing.JButton jButtonEjecutarReport;
     private javax.swing.JButton jButtonEjecutarSeleccion;
     private javax.swing.JButton jButtonNuevoDocumento;
+    private javax.swing.JButton jButtonVerDocumento;
     private javax.swing.JComboBox jComboBoxClientes;
     private javax.swing.JComboBox jComboBoxEmpresas;
     private javax.swing.JComboBox jComboBoxTipos;
