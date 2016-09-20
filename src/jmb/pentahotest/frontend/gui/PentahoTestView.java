@@ -42,54 +42,14 @@ public class PentahoTestView extends javax.swing.JFrame {
      */
     public PentahoTestView() {
         initComponents();
-        setTitle("Pentaho Test - [0.1]");
+        setTitle("Pentaho Test - Gestión de Documentos [v0.1]");
         setLocationRelativeTo(null);
         
         // Modelo de la tabla documentos
         modeloDocumentos = (DefaultTableModel) jTableDocumentos.getModel();
         
-        // Nuevo gestor de consultas
-        QueryManager queryManager = new QueryManager();
-        
-        // Rellenamos combo Clientes
-        jComboBoxClientes.removeAllItems();
-        jComboBoxClientes.addItem("Seleccione cliente...");
-        resultSet = queryManager.execute("select id, nombre, apellidos from Clientes order by id asc;");
-        try {
-            while (resultSet.next()) {
-                jComboBoxClientes.addItem(String.valueOf(resultSet.getInt(1)) + "-" + resultSet.getString(2) + " " + resultSet.getString(3));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(PentahoTestView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        // Rellenamos combo Tipos
-        jComboBoxTipos.removeAllItems();
-        jComboBoxTipos.addItem("Seleccione tipo...");
-        resultSet = queryManager.execute("select id, descripcion from Tipos order by id asc;");
-        try {
-            while (resultSet.next()){
-                jComboBoxTipos.addItem(String.valueOf(resultSet.getInt(1)) + "-" + resultSet.getString(2));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(PentahoTestView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        // Rellenamos combo Empresas
-        jComboBoxEmpresas.removeAllItems();
-        jComboBoxEmpresas.addItem("Seleccione empresa...");
-        resultSet = queryManager.execute("select id, nombre from Empresas order by id asc;");
-        try {
-            while (resultSet.next()){
-                jComboBoxEmpresas.addItem(String.valueOf(resultSet.getInt(1)) + "-" + resultSet.getString(2));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(PentahoTestView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        // Cerramos gestor de consultas
-        queryManager.statementClose();
-        queryManager.connectionClose();
+        // Rellenamos los combos de selección
+        rellenarCombos("");
         
         try {
             // Asignamos formatos para los campos Fecha inicio y Fecha fin (dd/MM/yyyy)
@@ -114,7 +74,7 @@ public class PentahoTestView extends javax.swing.JFrame {
                     target.setRowSelectionAllowed(true);
                     jTextFieldSeleccion.setText((String) jTableDocumentos.getValueAt(jTableDocumentos.rowAtPoint(e.getPoint()), 0));
                     jButtonEjecutarReport.setEnabled(true);
-                    jButtonVerDocumento.setEnabled(true);
+                    jButtonEditarDocumento.setEnabled(true);
                 } else {
                     target.setRowSelectionAllowed(false);
                 }
@@ -137,6 +97,57 @@ public class PentahoTestView extends javax.swing.JFrame {
         };
         
         jTableDocumentos.getColumnModel().getColumn(5).setCellRenderer(render);
+    }
+    
+    private void rellenarCombos(String fichero) {
+        // Nuevo gestor de consultas
+        QueryManager queryManager = new QueryManager();
+        
+        if (fichero.equals("") || fichero.equals("Clientes")) {
+            // Rellenamos combo Clientes
+            jComboBoxClientes.removeAllItems();
+            jComboBoxClientes.addItem("Seleccione cliente...");
+            resultSet = queryManager.execute("select id, nombre, apellidos from Clientes order by id asc;");
+            try {
+                while (resultSet.next()) {
+                    jComboBoxClientes.addItem(String.valueOf(resultSet.getInt(1)) + "-" + resultSet.getString(2) + " " + resultSet.getString(3));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(PentahoTestView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        if (fichero.equals("") || fichero.equals("Tipos")) {
+            // Rellenamos combo Tipos
+            jComboBoxTipos.removeAllItems();
+            jComboBoxTipos.addItem("Seleccione tipo...");
+            resultSet = queryManager.execute("select id, descripcion from Tipos order by id asc;");
+            try {
+                while (resultSet.next()){
+                    jComboBoxTipos.addItem(String.valueOf(resultSet.getInt(1)) + "-" + resultSet.getString(2));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(PentahoTestView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        if (fichero.equals("") || fichero.equals("Empresas")) {
+            // Rellenamos combo Empresas
+            jComboBoxEmpresas.removeAllItems();
+            jComboBoxEmpresas.addItem("Seleccione empresa...");
+            resultSet = queryManager.execute("select id, nombre from Empresas order by id asc;");
+            try {
+                while (resultSet.next()){
+                    jComboBoxEmpresas.addItem(String.valueOf(resultSet.getInt(1)) + "-" + resultSet.getString(2));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(PentahoTestView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        // Cerramos gestor de consultas
+        queryManager.statementClose();
+        queryManager.connectionClose();
     }
 
     /**
@@ -166,7 +177,7 @@ public class PentahoTestView extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jTextFieldSeleccion = new javax.swing.JTextField();
         jButtonEjecutarReport = new javax.swing.JButton();
-        jButtonVerDocumento = new javax.swing.JButton();
+        jButtonEditarDocumento = new javax.swing.JButton();
         jButtonConfiguracion = new javax.swing.JButton();
         jButtonNuevoDocumento = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -187,7 +198,7 @@ public class PentahoTestView extends javax.swing.JFrame {
             }
         });
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Selección", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, java.awt.Color.blue));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Selección de Documentos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, java.awt.Color.blue));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel1.setText("Cliente:");
@@ -327,11 +338,11 @@ public class PentahoTestView extends javax.swing.JFrame {
             }
         });
 
-        jButtonVerDocumento.setText("Ver documento");
-        jButtonVerDocumento.setEnabled(false);
-        jButtonVerDocumento.addActionListener(new java.awt.event.ActionListener() {
+        jButtonEditarDocumento.setText("Editar documento");
+        jButtonEditarDocumento.setEnabled(false);
+        jButtonEditarDocumento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonVerDocumentoActionPerformed(evt);
+                jButtonEditarDocumentoActionPerformed(evt);
             }
         });
 
@@ -361,7 +372,7 @@ public class PentahoTestView extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addComponent(jButtonEjecutarReport, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonVerDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonEditarDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonNuevoDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 269, Short.MAX_VALUE)
@@ -376,7 +387,7 @@ public class PentahoTestView extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(jTextFieldSeleccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonEjecutarReport)
-                    .addComponent(jButtonVerDocumento)
+                    .addComponent(jButtonEditarDocumento)
                     .addComponent(jButtonConfiguracion)
                     .addComponent(jButtonNuevoDocumento))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -584,12 +595,35 @@ public class PentahoTestView extends javax.swing.JFrame {
         Date date = new Date();
         DateFormat dateFormat = new SimpleDateFormat("ddMMyyyy_HHmmss");
         
-        // Create an output filename
-        final File outputFilename = new File("out" + File.separator + "Report_" + jTextFieldSeleccion.getText() + "_" + dateFormat.format(date) + ".pdf");
+        // Datos del report
+        String nombreReport = "";
+        int numeroCopias = 1;
+        QueryManager queryManager = new QueryManager();
+        resultSet = queryManager.execute("select nombre, numero_copias from Reports where id = (select id_report from Tipos where id = (select id_tipo from Documentos where id = " + Integer.valueOf(jTextFieldSeleccion.getText()) + "));");        
+        try {
+            while (resultSet.next()) {
+                nombreReport = resultSet.getString(1);
+                numeroCopias = resultSet.getInt(2);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PentahoTestView.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            queryManager.statementClose();
+            queryManager.connectionClose();
+        }
 
         try {
-            // Generate the report
-            new RenderReport(Integer.valueOf(jTextFieldSeleccion.getText())).generateReport(AbstractReportGenerator.OutputType.PDF, outputFilename);
+            File outputFilename = null;
+            String[] nombreFicheros = new String[numeroCopias];
+            for (int i = 0; i < numeroCopias; i++) {
+                nombreFicheros[i] = "Report_" + jTextFieldSeleccion.getText() + "_" + dateFormat.format(date) + ((numeroCopias > 1) ? "_Copia" + (i + 1) : "") + ".pdf";
+                // Create an output filename
+                outputFilename = new File("out" + File.separator + nombreFicheros[i]);
+                // Generate the report
+                new RenderReport(Integer.valueOf(jTextFieldSeleccion.getText()), nombreReport).generateReport(AbstractReportGenerator.OutputType.PDF, outputFilename);
+            }
+            // Merge pdf
+            
             Desktop.getDesktop().open(outputFilename);
             JOptionPane.showMessageDialog(this, "Impreso generado correctamente", "Pentaho Test", 1);
         } catch (IllegalArgumentException | IOException | ReportProcessingException ex) {
@@ -606,6 +640,7 @@ public class PentahoTestView extends javax.swing.JFrame {
 
     private void jMenuItemClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemClientesActionPerformed
         new TableView(this, true, "Clientes", "select * from Clientes order by id asc;", new Object[] { "Id", "Nombre", "Apellidos", "Dirección", "Cod.Postal", "Localidad", "Provincia", "País", "DNI/CIF", "Tel.Fijo", "Tel.Móvil", "Fax", "Email", "Web" }).setVisible(true);
+        rellenarCombos("Clientes");
     }//GEN-LAST:event_jMenuItemClientesActionPerformed
 
     private void jMenuItemDocumentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDocumentosActionPerformed
@@ -614,6 +649,7 @@ public class PentahoTestView extends javax.swing.JFrame {
 
     private void jMenuItemTiposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemTiposActionPerformed
         new TableView(this, true, "Tipos", "select * from Tipos order by id asc;", new Object[] { "Id", "Descripción", "Id Report" }).setVisible(true);
+        rellenarCombos("Tipos");
     }//GEN-LAST:event_jMenuItemTiposActionPerformed
 
     private void jMenuItemReportsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemReportsActionPerformed
@@ -622,6 +658,7 @@ public class PentahoTestView extends javax.swing.JFrame {
 
     private void jMenuItemEmpresasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEmpresasActionPerformed
         new TableView(this, true, "Empresas", "select * from Empresas order by id asc;", new Object[] { "Id", "Nombre", "Dirección", "Localidad", "Cod.Postal", "Provincia", "País", "CIF", "Teléfono", "Fax", "Email", "Web", "LOPD", "Reg.Mercantil" }).setVisible(true);
+        rellenarCombos("Empresas");
     }//GEN-LAST:event_jMenuItemEmpresasActionPerformed
 
     private void jButtonNuevoDocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoDocumentoActionPerformed
@@ -631,23 +668,23 @@ public class PentahoTestView extends javax.swing.JFrame {
     private void jTextFieldSeleccionFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldSeleccionFocusLost
         if (jTextFieldSeleccion.getText().equals("")) {
             jButtonEjecutarReport.setEnabled(false);
-            jButtonVerDocumento.setEnabled(false);
+            jButtonEditarDocumento.setEnabled(false);
         } else {
             jButtonEjecutarReport.setEnabled(true);
-            jButtonVerDocumento.setEnabled(true);
+            jButtonEditarDocumento.setEnabled(true);
         }
     }//GEN-LAST:event_jTextFieldSeleccionFocusLost
 
-    private void jButtonVerDocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerDocumentoActionPerformed
+    private void jButtonEditarDocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarDocumentoActionPerformed
         new DocumentosView(this, true, jTextFieldSeleccion.getText()).setVisible(true);
-    }//GEN-LAST:event_jButtonVerDocumentoActionPerformed
+    }//GEN-LAST:event_jButtonEditarDocumentoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonConfiguracion;
+    private javax.swing.JButton jButtonEditarDocumento;
     private javax.swing.JButton jButtonEjecutarReport;
     private javax.swing.JButton jButtonEjecutarSeleccion;
     private javax.swing.JButton jButtonNuevoDocumento;
-    private javax.swing.JButton jButtonVerDocumento;
     private javax.swing.JComboBox jComboBoxClientes;
     private javax.swing.JComboBox jComboBoxEmpresas;
     private javax.swing.JComboBox jComboBoxTipos;

@@ -13,14 +13,14 @@ import jmb.pentahotest.backend.controller.PropertiesFileManager;
 public class Connection {
 
     public Connection() {
-        this.url = PropertiesFileManager.getInstance().getProperty(PropertiesFileManager.BBDD_URL);
-        this.user = PropertiesFileManager.getInstance().getProperty(PropertiesFileManager.BBDD_USER);
-        this.password = PropertiesFileManager.getInstance().getProperty(PropertiesFileManager.BBDD_PASSWORD);
+        url = PropertiesFileManager.getInstance().getProperty(PropertiesFileManager.BBDD_URL);
+        user = PropertiesFileManager.getInstance().getProperty(PropertiesFileManager.BBDD_USER);
+        password = PropertiesFileManager.getInstance().getProperty(PropertiesFileManager.BBDD_PASSWORD);
     }
 
     public void connect() {
         try {
-            this.connect = DriverManager.getConnection("jdbc:" + PropertiesFileManager.getInstance().getProperty(PropertiesFileManager.BBDD_TYPE).toLowerCase() + ":" + this.url, this.user, this.password);
+            connect = DriverManager.getConnection("jdbc:" + PropertiesFileManager.getInstance().getProperty(PropertiesFileManager.BBDD_TYPE).toLowerCase() + ":" + url, user, password);
             if (connect != null) {
                 //connect.setAutoCommit(false);
             }

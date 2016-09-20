@@ -1,43 +1,75 @@
 package jmb.pentahotest.frontend.gui.tables;
 
 import java.awt.Cursor;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import jmb.pentahotest.backend.controller.objects.Report;
+import jmb.pentahotest.backend.controller.objects.Tipo;
+import jmb.pentahotest.backend.model.QueryManager;
 
 /**
  *
  * @author jmbalbas
  */
-public class ReportsView extends javax.swing.JDialog {
+public class TiposView extends javax.swing.JDialog {
 
     /**
-     * Creates new form ReportsView
+     * Creates new form TiposView
      * @param parent
      * @param modal
      * @param id
      */
-    public ReportsView(javax.swing.JDialog parent, boolean modal, String id) {
+    public TiposView(javax.swing.JDialog parent, boolean modal, String id) {
         super(parent, modal);
         initComponents();
-        setTitle((!id.equals("")) ? "Editar Registro [Reports]" : "Nuevo Registro [Reports]");
+        setTitle((!id.equals("")) ? "Editar Registro [Tipos]" : "Nuevo Registro [Tipos]");
         setLocationRelativeTo(null);
         
-        report = new Report();
+        tipo = new Tipo();
+        
+        // Nuevo gestor de consultas
+        QueryManager queryManager = new QueryManager();
+        
+        // Vaciamos combo Reports
+        jComboBoxReports.removeAllItems();
         
         if (!id.equals("")) {
             newReg = false;
             jButtonGrabarRegistro.setEnabled(true);
             jTextFieldId.setText(id);
-            report.setId(Integer.valueOf(id));
-            report = report.select();
-            jTextFieldNombre.setText(report.getNombre());
-            jTextFieldDescripcion.setText(report.getDescripcion());
-            jTextFieldNumeroCopias.setText(String.valueOf(report.getNumeroCopias()));
+            tipo.setId(Integer.valueOf(id));
+            tipo = tipo.select();
+            jTextFieldDescripcion.setText(tipo.getDescripcion());
+            // Rellenamos combo Reports
+            resultSet = queryManager.execute("select id, nombre from Reports where id = " + tipo.getReport() + ";");
+            try {
+                while (resultSet.next()) {
+                    jComboBoxReports.addItem(String.valueOf(resultSet.getInt(1)) + "-" + resultSet.getString(2));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(TiposView.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else {
             newReg = true;
-            jTextFieldId.setText(String.valueOf(report.getNextId()));
-            report.setId(Integer.valueOf(jTextFieldId.getText()));
+            jTextFieldId.setText(String.valueOf(tipo.getNextId()));
+            tipo.setId(Integer.valueOf(jTextFieldId.getText()));
+            // Rellenamos combo Reports
+            jComboBoxReports.addItem("Seleccione report...");
+            resultSet = queryManager.execute("select id, nombre from Reports order by id asc;");
+            try {
+                while (resultSet.next()) {
+                    jComboBoxReports.addItem(String.valueOf(resultSet.getInt(1)) + "-" + resultSet.getString(2));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(TiposView.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+        
+        // Cerramos gestor de consultas
+        queryManager.statementClose();
+        queryManager.connectionClose();
     }
 
     /**
@@ -49,33 +81,33 @@ public class ReportsView extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jTextFieldNombre = new javax.swing.JTextField();
-        jTextFieldDescripcion = new javax.swing.JTextField();
-        jTextFieldNumeroCopias = new javax.swing.JTextField();
-        jButtonGrabarRegistro = new javax.swing.JButton();
-        jButtonCancelar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jTextFieldId = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jTextFieldDescripcion = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jButtonGrabarRegistro = new javax.swing.JButton();
+        jButtonCancelar = new javax.swing.JButton();
+        jComboBoxReports = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel4.setText("Id:");
+
+        jTextFieldId.setEnabled(false);
+
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel1.setText("Nombre:");
+        jLabel1.setText("Descripción:");
 
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel2.setText("Descripción:");
-
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel3.setText("Nº de copias:");
-
-        jTextFieldNombre.addFocusListener(new java.awt.event.FocusAdapter() {
+        jTextFieldDescripcion.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextFieldNombreFocusLost(evt);
+                jTextFieldDescripcionFocusLost(evt);
             }
         });
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel2.setText("Report:");
 
         jButtonGrabarRegistro.setText("Grabar registro");
         jButtonGrabarRegistro.setEnabled(false);
@@ -92,10 +124,7 @@ public class ReportsView extends javax.swing.JDialog {
             }
         });
 
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel4.setText("Id:");
-
-        jTextFieldId.setEnabled(false);
+        jComboBoxReports.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -104,47 +133,40 @@ public class ReportsView extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldNumeroCopias, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jButtonGrabarRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jTextFieldDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jTextFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButtonGrabarRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldDescripcion)
+                    .addComponent(jComboBoxReports, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jTextFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
                     .addComponent(jTextFieldDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextFieldNumeroCopias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2)
+                    .addComponent(jComboBoxReports, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonGrabarRegistro)
                     .addComponent(jButtonCancelar))
-                .addGap(20, 20, 20))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
@@ -152,18 +174,19 @@ public class ReportsView extends javax.swing.JDialog {
 
     private void jButtonGrabarRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGrabarRegistroActionPerformed
         setCursor(new Cursor(Cursor.WAIT_CURSOR));
-        report.setNombre(jTextFieldNombre.getText());
-        report.setDescripcion((!jTextFieldDescripcion.getText().equals("")) ? jTextFieldDescripcion.getText() : "");
-        report.setNumeroCopias((!jTextFieldNumeroCopias.getText().equals("")) ? Integer.valueOf(jTextFieldNumeroCopias.getText()) : 0);
+        tipo.setDescripcion((!jTextFieldDescripcion.getText().equals("")) ? jTextFieldDescripcion.getText() : "");
+        String report = jComboBoxReports.getSelectedItem().toString();
+        String[] idReport = report.split("-");
+        tipo.setReport(Integer.valueOf(idReport[0]));
         if (newReg) {
-            if (report.insert()) {
-                JOptionPane.showMessageDialog(this, "Registro grabado correctamente", "Reports", 1);
+            if (tipo.insert()) {
+                JOptionPane.showMessageDialog(this, "Registro grabado correctamente", "Tipos", 1);
                 setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                 dispose();
             }
         } else {
-            if (report.update()) {
-                JOptionPane.showMessageDialog(this, "Registro actualizado correctamente", "Reports", 1);
+            if (tipo.update()) {
+                JOptionPane.showMessageDialog(this, "Registro actualizado correctamente", "Tipos", 1);
                 setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                 dispose();
             }
@@ -174,27 +197,26 @@ public class ReportsView extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
-    private void jTextFieldNombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldNombreFocusLost
-        if (!jTextFieldNombre.getText().equals("")) {
+    private void jTextFieldDescripcionFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldDescripcionFocusLost
+        if (!jTextFieldDescripcion.getText().equals("")) {
             jButtonGrabarRegistro.setEnabled(true);
         } else {
             jButtonGrabarRegistro.setEnabled(false);
         }
-    }//GEN-LAST:event_jTextFieldNombreFocusLost
+    }//GEN-LAST:event_jTextFieldDescripcionFocusLost
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonGrabarRegistro;
+    private javax.swing.JComboBox jComboBoxReports;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JTextField jTextFieldDescripcion;
     private javax.swing.JTextField jTextFieldId;
-    private javax.swing.JTextField jTextFieldNombre;
-    private javax.swing.JTextField jTextFieldNumeroCopias;
     // End of variables declaration//GEN-END:variables
-    
-    private Report report;
+
+    private Tipo tipo;
     private final boolean newReg;
+    private ResultSet resultSet;
 }

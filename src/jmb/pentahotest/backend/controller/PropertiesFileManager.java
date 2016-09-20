@@ -62,10 +62,10 @@ public class PropertiesFileManager {
     
     private Properties properties;
     public final static String PROPERTIES_FILE_NAME = "database.properties";
-    public final static String BBDD_TYPE = "TipoBaseDatos";
-    public final static String BBDD_URL = "UrlBaseDatos";
-    public final static String BBDD_USER = "UsuarioBaseDatos";
-    public final static String BBDD_PASSWORD = "ContraseñaBaseDatos";
+    public final static String BBDD_TYPE = "TypeDataBase";
+    public final static String BBDD_URL = "UrlDataBase";
+    public final static String BBDD_USER = "UserDataBase";
+    public final static String BBDD_PASSWORD = "PassDataBase";
     // Ruta de acceso al fichero properties    
     private final static String url = System.getProperty("user.dir") + File.separator + PROPERTIES_FILE_NAME;
 }

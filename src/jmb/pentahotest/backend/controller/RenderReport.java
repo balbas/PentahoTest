@@ -20,8 +20,9 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
  */
 public class RenderReport extends AbstractReportGenerator {
     
-    public RenderReport(int referencia) {
+    public RenderReport(int referencia, String nombreReport) {
         this.referencia = referencia;
+        this.nombreReport = nombreReport;
     }
     
     /**
@@ -35,7 +36,7 @@ public class RenderReport extends AbstractReportGenerator {
         try {
             // Using the classloader, get the URL to the reportDefinition file
             final ClassLoader classloader = this.getClass().getClassLoader();
-            final URL reportDefinitionURL = classloader.getResource("jmb/pentahotest/backend/controller/resources/PRFACTURA.prpt");
+            final URL reportDefinitionURL = classloader.getResource("jmb/pentahotest/backend/controller/resources/" + nombreReport + ".prpt");
 
             // Parse the report file
             final ResourceManager resourceManager = new ResourceManager();
@@ -85,4 +86,5 @@ public class RenderReport extends AbstractReportGenerator {
     
     private static final String QUERY_NAME = "ReportQuery";
     private final int referencia;
+    private final String nombreReport;
 }

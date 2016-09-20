@@ -1,5 +1,6 @@
 package jmb.pentahotest.frontend.gui.tables;
 
+import java.awt.Cursor;
 import javax.swing.JOptionPane;
 import jmb.pentahotest.backend.controller.objects.Empresa;
 
@@ -18,14 +19,14 @@ public class EmpresasView extends javax.swing.JDialog {
     public EmpresasView(javax.swing.JDialog parent, boolean modal, String id) {
         super(parent, modal);
         initComponents();
-        setTitle((!id.equals("")) ? "Ver Registro [Empresas]" : "Nuevo Registro [Empresas]");
+        setTitle((!id.equals("")) ? "Editar Registro [Empresas]" : "Nuevo Registro [Empresas]");
         setLocationRelativeTo(null);
         
         empresa = new Empresa();
         
         if (!id.equals("")) {
             newReg = false;
-            jButtonGrabarRegistro.setEnabled(false);
+            jButtonGrabarRegistro.setEnabled(true);
             jTextFieldId.setText(id);
             empresa.setId(Integer.valueOf(id));
             empresa = empresa.select();
@@ -102,6 +103,12 @@ public class EmpresasView extends javax.swing.JDialog {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel1.setText("Nombre:");
 
+        jTextFieldNombre.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextFieldNombreFocusLost(evt);
+            }
+        });
+
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setText("Dirección:");
 
@@ -133,6 +140,7 @@ public class EmpresasView extends javax.swing.JDialog {
         jLabel14.setText("Fax:");
 
         jButtonGrabarRegistro.setText("Grabar registro");
+        jButtonGrabarRegistro.setEnabled(false);
         jButtonGrabarRegistro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonGrabarRegistroActionPerformed(evt);
@@ -323,7 +331,8 @@ public class EmpresasView extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonGrabarRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGrabarRegistroActionPerformed
-        empresa.setNombre((!jTextFieldNombre.getText().equals("")) ? jTextFieldNombre.getText() : "");
+        setCursor(new Cursor(Cursor.WAIT_CURSOR));
+        empresa.setNombre(jTextFieldNombre.getText());
         empresa.setDireccion((!jTextFieldDireccion.getText().equals("")) ? jTextFieldDireccion.getText() : "");
         empresa.setCp((!jTextFieldCp.getText().equals("")) ? jTextFieldCp.getText() : "");
         empresa.setLocalidad((!jTextFieldLocalidad.getText().equals("")) ? jTextFieldLocalidad.getText() : "");
@@ -338,12 +347,14 @@ public class EmpresasView extends javax.swing.JDialog {
         empresa.setRegistroMercantil((!jTextAreaRegistroMercantil.getText().equals("")) ? jTextAreaRegistroMercantil.getText() : "");
         if (newReg) {
             if (empresa.insert()) {
-                JOptionPane.showMessageDialog(this, "Registro grabado correctamente", "Reports", 1);
+                JOptionPane.showMessageDialog(this, "Registro grabado correctamente", "Empresas", 1);
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                 dispose();
             }
         } else {
             if (empresa.update()) {
-                JOptionPane.showMessageDialog(this, "Registro actualizado correctamente", "Reports", 1);
+                JOptionPane.showMessageDialog(this, "Registro actualizado correctamente", "Empresas", 1);
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                 dispose();
             }
         }
@@ -352,6 +363,14 @@ public class EmpresasView extends javax.swing.JDialog {
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
         dispose();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
+
+    private void jTextFieldNombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldNombreFocusLost
+        if (!jTextFieldNombre.getText().equals("")) {
+            jButtonGrabarRegistro.setEnabled(true);
+        } else {
+            jButtonGrabarRegistro.setEnabled(false);
+        }
+    }//GEN-LAST:event_jTextFieldNombreFocusLost
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCancelar;

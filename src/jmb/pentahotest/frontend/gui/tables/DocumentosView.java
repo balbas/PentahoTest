@@ -1,5 +1,6 @@
 package jmb.pentahotest.frontend.gui.tables;
 
+import java.awt.Cursor;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.NumberFormat;
@@ -483,6 +484,7 @@ public class DocumentosView extends javax.swing.JDialog {
 
     private void jButtonGrabarRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGrabarRegistroActionPerformed
         if (!jFormattedTextFieldFecha.getText().equals("  /  /    ") && !jFormattedTextFieldHora.getText().equals("  :  ") && !jComboBoxTipos.getSelectedItem().toString().equals("Seleccione tipo...") && !jComboBoxEmpresas.getSelectedItem().toString().equals("Seleccione empresa...") && !jComboBoxClientes.getSelectedItem().toString().equals("Seleccione cliente...")) {
+            setCursor(new Cursor(Cursor.WAIT_CURSOR));
             // Documento
             documento.setNumeracion((!jTextFieldNumeracion.getText().equals("")) ? jTextFieldNumeracion.getText() : "");
             documento.setFecha(jFormattedTextFieldFecha.getText());
@@ -546,11 +548,13 @@ public class DocumentosView extends javax.swing.JDialog {
             if (newReg) {
                 if (documento.insert() && lineas.insert()) {
                     JOptionPane.showMessageDialog(this, "Registro grabado correctamente", "Documentos", 1);
+                    setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                     dispose();
                 }
             } else {
                 if (documento.update() && lineas.update()) {
                     JOptionPane.showMessageDialog(this, "Registro actualizado correctamente", "Documentos", 1);
+                    setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                     dispose();
                 }
             }
@@ -577,7 +581,7 @@ public class DocumentosView extends javax.swing.JDialog {
     }//GEN-LAST:event_jTextFieldPorcentajeIvaKeyReleased
 
     private void initComponents2(String id) {
-        setTitle((!id.equals("")) ? "Ver Registro [Documentos]" : "Nuevo Registro [Documentos]");
+        setTitle((!id.equals("")) ? "Editar Registro [Documentos]" : "Nuevo Registro [Documentos]");
         setLocationRelativeTo(null);
         
         /**********************************************************************/
@@ -698,7 +702,7 @@ public class DocumentosView extends javax.swing.JDialog {
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(PentahoTestView.class.getName()).log(Level.SEVERE, null, ex);
-            }            
+            }
             // Rellenamos combo Empresas con la empresa del documento
             resultSet = queryManager.execute("select id, nombre from Empresas where id = " + documento.getEmpresa() + ";");
             try {
@@ -786,6 +790,10 @@ public class DocumentosView extends javax.swing.JDialog {
             } catch (SQLException ex) {
                 Logger.getLogger(PentahoTestView.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
+            // Cerramos gestor de consultas
+            queryManager.statementClose();
+            queryManager.connectionClose();
             
             // Agregamos una fila en blanco
             Object[] nuevaFila = new Object[7];

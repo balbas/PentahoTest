@@ -1,5 +1,6 @@
 package jmb.pentahotest.frontend.gui.tables;
 
+import java.awt.Cursor;
 import javax.swing.JOptionPane;
 import jmb.pentahotest.backend.controller.objects.Cliente;
 
@@ -18,14 +19,14 @@ public class ClientesView extends javax.swing.JDialog {
     public ClientesView(javax.swing.JDialog parent, boolean modal, String id) {
         super(parent, modal);
         initComponents();
-        setTitle((!id.equals("")) ? "Ver Registro [Clientes]" : "Nuevo Registro [Clientes]");
+        setTitle((!id.equals("")) ? "Editar Registro [Clientes]" : "Nuevo Registro [Clientes]");
         setLocationRelativeTo(null);
         
         cliente = new Cliente();
         
         if (!id.equals("")) {
             newReg = false;
-            jButtonGrabarRegistro.setEnabled(false);
+            jButtonGrabarRegistro.setEnabled(true);
             jTextFieldId.setText(id);
             cliente.setId(Integer.valueOf(id));
             cliente = cliente.select();
@@ -99,6 +100,12 @@ public class ClientesView extends javax.swing.JDialog {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel1.setText("Nombre:");
 
+        jTextFieldNombre.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextFieldNombreFocusLost(evt);
+            }
+        });
+
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("Apellidos:");
 
@@ -136,6 +143,7 @@ public class ClientesView extends javax.swing.JDialog {
         jLabel14.setText("Fax:");
 
         jButtonGrabarRegistro.setText("Grabar registro");
+        jButtonGrabarRegistro.setEnabled(false);
         jButtonGrabarRegistro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonGrabarRegistroActionPerformed(evt);
@@ -292,7 +300,8 @@ public class ClientesView extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonGrabarRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGrabarRegistroActionPerformed
-        cliente.setNombre((!jTextFieldNombre.getText().equals("")) ? jTextFieldNombre.getText() : "");
+        setCursor(new Cursor(Cursor.WAIT_CURSOR));
+        cliente.setNombre(jTextFieldNombre.getText());
         cliente.setApellidos((!jTextFieldApellidos.getText().equals("")) ? jTextFieldApellidos.getText() : "");
         cliente.setDireccion((!jTextFieldDireccion.getText().equals("")) ? jTextFieldDireccion.getText() : "");
         cliente.setCp((!jTextFieldCp.getText().equals("")) ? jTextFieldCp.getText() : "");
@@ -307,12 +316,14 @@ public class ClientesView extends javax.swing.JDialog {
         cliente.setWeb((!jTextFieldWeb.getText().equals("")) ? jTextFieldWeb.getText() : "");
         if (newReg) {
             if (cliente.insert()) {
-                JOptionPane.showMessageDialog(this, "Registro grabado correctamente", "Reports", 1);
+                JOptionPane.showMessageDialog(this, "Registro grabado correctamente", "Clientes", 1);
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                 dispose();
             }
         } else {
             if (cliente.update()) {
-                JOptionPane.showMessageDialog(this, "Registro actualizado correctamente", "Reports", 1);
+                JOptionPane.showMessageDialog(this, "Registro actualizado correctamente", "Clientes", 1);
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                 dispose();
             }
         }
@@ -321,6 +332,14 @@ public class ClientesView extends javax.swing.JDialog {
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
         dispose();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
+
+    private void jTextFieldNombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldNombreFocusLost
+        if (!jTextFieldNombre.getText().equals("")) {
+            jButtonGrabarRegistro.setEnabled(true);
+        } else {
+            jButtonGrabarRegistro.setEnabled(false);
+        }
+    }//GEN-LAST:event_jTextFieldNombreFocusLost
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCancelar;

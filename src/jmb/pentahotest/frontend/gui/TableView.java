@@ -13,6 +13,7 @@ import jmb.pentahotest.frontend.gui.tables.ClientesView;
 import jmb.pentahotest.frontend.gui.tables.DocumentosView;
 import jmb.pentahotest.frontend.gui.tables.EmpresasView;
 import jmb.pentahotest.frontend.gui.tables.ReportsView;
+import jmb.pentahotest.frontend.gui.tables.TiposView;
 
 /**
  *
@@ -217,6 +218,11 @@ public class TableView extends javax.swing.JDialog {
                 new EmpresasView(this, true, "").setVisible(true);
                 execute();
                 break;
+                
+            case "Tipos":
+                new TiposView(this, true, "").setVisible(true);
+                execute();
+                break;
         }
     }//GEN-LAST:event_jButtonNuevoRegistroActionPerformed
 
@@ -239,6 +245,11 @@ public class TableView extends javax.swing.JDialog {
             
             case "Empresas":
                 new EmpresasView(this, true, jTextFieldSeleccion.getText()).setVisible(true);
+                execute();
+                break;
+                
+            case "Tipos":
+                new TiposView(this, true, jTextFieldSeleccion.getText()).setVisible(true);
                 execute();
                 break;
         }
