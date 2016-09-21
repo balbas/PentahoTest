@@ -16,7 +16,7 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
-import jmb.pentahotest.backend.controller.NumberRenderer;
+import jmb.pentahotest.backend.controller.render.NumberRenderer;
 import jmb.pentahotest.backend.controller.objects.Documento;
 import jmb.pentahotest.backend.controller.objects.Lineas;
 import jmb.pentahotest.backend.model.QueryManager;
@@ -30,26 +30,30 @@ public class DocumentosView extends javax.swing.JDialog {
 
     /**
      * Creates new form DocumentoView
+     * 
      * @param parent
      * @param modal
-     * @param id
+     * @param idDoc
      */
-    public DocumentosView(javax.swing.JDialog parent, boolean modal, String id) {
+    public DocumentosView(javax.swing.JDialog parent, boolean modal, String idDoc) {
         super(parent, modal);
         initComponents();
-        initComponents2(id);
+        this.idDoc = idDoc;
+        initComponents2();
     }
     
     /**
      * Creates new form DocumentoView
+     * 
      * @param parent
      * @param modal
-     * @param id
+     * @param idDoc
      */
-    public DocumentosView(javax.swing.JFrame parent, boolean modal, String id) {
+    public DocumentosView(javax.swing.JFrame parent, boolean modal, String idDoc) {
         super(parent, modal);
         initComponents();
-        initComponents2(id);
+        this.idDoc = idDoc;
+        initComponents2();
     }
 
     /**
@@ -90,6 +94,10 @@ public class DocumentosView extends javax.swing.JDialog {
         jLabel16 = new javax.swing.JLabel();
         jTextFieldFormaPago = new javax.swing.JTextField();
         jTextFieldPorcentajeIva = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        jFormattedTextFieldFechaCierre = new javax.swing.JFormattedTextField();
+        jLabel17 = new javax.swing.JLabel();
+        jFormattedTextFieldHoraCierre = new javax.swing.JFormattedTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextAreaObservaciones = new javax.swing.JTextArea();
@@ -200,7 +208,7 @@ public class DocumentosView extends javax.swing.JDialog {
         jLabel10.setText("Importe Base:");
 
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel11.setText("Importe Dtos.:");
+        jLabel11.setText("Importe Dto.:");
 
         jTextFieldImporteBase.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTextFieldImporteBase.setText("0,00");
@@ -244,6 +252,24 @@ public class DocumentosView extends javax.swing.JDialog {
             }
         });
 
+        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel15.setText("Fecha cierre:");
+
+        jFormattedTextFieldFechaCierre.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jFormattedTextFieldFechaCierreFocusGained(evt);
+            }
+        });
+
+        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel17.setText("Hora cierre:");
+
+        jFormattedTextFieldHoraCierre.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jFormattedTextFieldHoraCierreFocusGained(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -266,14 +292,23 @@ public class DocumentosView extends javax.swing.JDialog {
                     .addComponent(jTextFieldImporteIva, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
                     .addComponent(jTextFieldPorcentajeIva))
                 .addGap(10, 10, 10)
-                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                    .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
-                        .addComponent(jLabelImporteTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE))
-                    .addComponent(jTextFieldFormaPago))
+                        .addComponent(jLabelImporteTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE))
+                    .addComponent(jTextFieldFormaPago)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jFormattedTextFieldFechaCierre, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jFormattedTextFieldHoraCierre, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(57, 57, 57)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -288,11 +323,17 @@ public class DocumentosView extends javax.swing.JDialog {
                     .addComponent(jTextFieldFormaPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldPorcentajeIva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(jTextFieldImporteDto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel13)
-                    .addComponent(jTextFieldImporteIva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel15)
+                        .addComponent(jFormattedTextFieldFechaCierre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel17)
+                        .addComponent(jFormattedTextFieldHoraCierre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel11)
+                        .addComponent(jTextFieldImporteDto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel13)
+                        .addComponent(jTextFieldImporteIva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
@@ -394,11 +435,11 @@ public class DocumentosView extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jComboBoxEmpresas, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jFormattedTextFieldFecha))
+                                        .addComponent(jFormattedTextFieldFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -406,7 +447,7 @@ public class DocumentosView extends javax.swing.JDialog {
                                 .addGap(10, 10, 10)
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jFormattedTextFieldHora, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jFormattedTextFieldHora, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 740, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(20, 20, 20))
@@ -459,7 +500,7 @@ public class DocumentosView extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jFormattedTextFieldFechaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jFormattedTextFieldFechaFocusGained
-         if (jFormattedTextFieldFecha.getText().equals("  /  /    ")) {
+        if (jFormattedTextFieldFecha.getText().equals("  /  /    ")) {
             Date date = new Date();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
             jFormattedTextFieldFecha.setText(simpleDateFormat.format(date));
@@ -505,6 +546,8 @@ public class DocumentosView extends javax.swing.JDialog {
             documento.setImporteCuota((!jTextFieldImporteIva.getText().equals("")) ? Double.valueOf(jTextFieldImporteIva.getText().replace(',', '.')) : 0.0);
             documento.setImporteTotal((!jLabelImporteTotal.getText().equals("")) ? Double.valueOf(jLabelImporteTotal.getText().replace(',', '.')) : 0.0);
             documento.setFormaPago((!jTextFieldFormaPago.getText().equals("")) ? jTextFieldFormaPago.getText() : "");
+            documento.setFechaCierre((!jFormattedTextFieldFechaCierre.getText().equals("  /  /    ")) ? jFormattedTextFieldFechaCierre.getText() : "0");
+            documento.setHoraCierre((!jFormattedTextFieldHoraCierre.getText().equals("  :  ")) ? jFormattedTextFieldHoraCierre.getText() : "");
             
             // Líneas
             ArrayList<Integer> id = new ArrayList();
@@ -518,6 +561,7 @@ public class DocumentosView extends javax.swing.JDialog {
             ArrayList<Double> importeDto = new ArrayList();
             ArrayList<Double> importeNeto = new ArrayList();
             int contadorReal = 1;
+            System.out.println(modeloLineas.getRowCount());
             for (int i = 0; i < modeloLineas.getRowCount(); i++) {
                 if (modeloLineas.getValueAt(i, 2) != null) {
                     id.add(lineas.getNextId() + i);
@@ -550,14 +594,30 @@ public class DocumentosView extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(this, "Registro grabado correctamente", "Documentos", 1);
                     setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                     dispose();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error al grabar el registro", "Error", 0);
                 }
             } else {
-                if (documento.update() && lineas.update()) {
-                    JOptionPane.showMessageDialog(this, "Registro actualizado correctamente", "Documentos", 1);
-                    setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-                    dispose();
+                if (documento.update()) {
+                    if (lineas.delete()) {
+                        if (lineas.insert()) {
+                            JOptionPane.showMessageDialog(this, "Registro actualizado correctamente", "Documentos", 1);
+                            setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                            dispose();
+                        } else {
+                            System.out.println("Error al insertar lineas");
+                            JOptionPane.showMessageDialog(this, "Error al actualizar el registro", "Error", 0);
+                        }
+                    } else {
+                        System.out.println("Error al borrar lineas");
+                        JOptionPane.showMessageDialog(this, "Error al actualizar el registro", "Error", 0);
+                    }
+                } else {
+                    System.out.println("Error al actualizar documento");
+                    JOptionPane.showMessageDialog(this, "Error al actualizar el registro", "Error", 0);
                 }
             }
+            setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         }
     }//GEN-LAST:event_jButtonGrabarRegistroActionPerformed
 
@@ -580,8 +640,28 @@ public class DocumentosView extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jTextFieldPorcentajeIvaKeyReleased
 
-    private void initComponents2(String id) {
-        setTitle((!id.equals("")) ? "Editar Registro [Documentos]" : "Nuevo Registro [Documentos]");
+    private void jFormattedTextFieldFechaCierreFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jFormattedTextFieldFechaCierreFocusGained
+        if (jFormattedTextFieldFechaCierre.getText().equals("  /  /    ")) {
+            Date date = new Date();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            jFormattedTextFieldFechaCierre.setText(simpleDateFormat.format(date));
+        }
+        jFormattedTextFieldFechaCierre.setSelectionStart(0);
+        jFormattedTextFieldFechaCierre.setSelectionEnd(jFormattedTextFieldFechaCierre.getText().length());
+    }//GEN-LAST:event_jFormattedTextFieldFechaCierreFocusGained
+
+    private void jFormattedTextFieldHoraCierreFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jFormattedTextFieldHoraCierreFocusGained
+        if (jFormattedTextFieldHoraCierre.getText().equals("  :  ")) {
+            Date date = new Date();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm");
+            jFormattedTextFieldHoraCierre.setText(simpleDateFormat.format(date));
+        }
+        jFormattedTextFieldHoraCierre.setSelectionStart(0);
+        jFormattedTextFieldHoraCierre.setSelectionEnd(jFormattedTextFieldHoraCierre.getText().length());
+    }//GEN-LAST:event_jFormattedTextFieldHoraCierreFocusGained
+
+    private void initComponents2() {
+        setTitle((!idDoc.equals("")) ? "Editar Registro [Documentos]" : "Nuevo Registro [Documentos]");
         setLocationRelativeTo(null);
         
         /**********************************************************************/
@@ -598,10 +678,12 @@ public class DocumentosView extends javax.swing.JDialog {
         jComboBoxEmpresas.removeAllItems();
         jComboBoxClientes.removeAllItems();
         
-        // Asignamos formatos para los campos Fecha (dd/MM/yyyy), Hora (mm:hh) y Porcentaje de IVA ("#,##")
+        // Asignamos formatos para los campos Fecha (dd/MM/yyyy) y Hora (mm:hh)
         try {
             jFormattedTextFieldFecha.setFormatterFactory(new DefaultFormatterFactory(new MaskFormatter("##/##/####")));
+            jFormattedTextFieldFechaCierre.setFormatterFactory(new DefaultFormatterFactory(new MaskFormatter("##/##/####")));
             jFormattedTextFieldHora.setFormatterFactory(new DefaultFormatterFactory(new MaskFormatter("##:##")));
+            jFormattedTextFieldHoraCierre.setFormatterFactory(new DefaultFormatterFactory(new MaskFormatter("##:##")));
         } catch (ParseException ex) {
             Logger.getLogger(PentahoTestView.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -686,14 +768,14 @@ public class DocumentosView extends javax.swing.JDialog {
         /*                         CONSULTAR / NUEVO                          */
         /**********************************************************************/
 
-        if (!id.equals("")) {
+        if (!idDoc.equals("")) {
             newReg = false;
-            jButtonGrabarRegistro.setEnabled(false);
-            jTextFieldId.setText(id);
-            documento.setId(Integer.valueOf(id));
+            jTextFieldId.setText(idDoc);
+            documento.setId(Integer.valueOf(idDoc));
             lineas.setDocumento(documento.getId());
             documento = documento.select();
-            lineas = lineas.select();            
+            lineas = lineas.select();
+            
             // Rellenamos combo Tipos con el tipo del documento
             resultSet = queryManager.execute("select id, descripcion from Tipos where id = " + documento.getTipo() + ";");
             try {
@@ -725,11 +807,16 @@ public class DocumentosView extends javax.swing.JDialog {
             jTextFieldNumeracion.setText(documento.getNumeracion());            
             // Fecha
             String fecha = String.valueOf(documento.getFecha());
-            jFormattedTextFieldFecha.setText(fecha);            
+            jFormattedTextFieldFecha.setText(fecha.substring(6, 8) + "/" + fecha.substring(4, 6) + "/" + fecha.substring(0, 4));            
             // Hora
             jFormattedTextFieldHora.setText(documento.getHora());
             // Forma de pago
             jTextFieldFormaPago.setText(documento.getFormaPago());
+            // Fecha de cierre
+            String fechaCierre = String.valueOf(documento.getFechaCierre());
+            jFormattedTextFieldFechaCierre.setText((!fechaCierre.equals("0")) ? fechaCierre.substring(6, 8) + "/" + fechaCierre.substring(4, 6) + "/" + fechaCierre.substring(0, 4) : "  /  /    ");
+            // Hora de cierre
+            jFormattedTextFieldHoraCierre.setText((documento.getHoraCierre() != null) ? documento.getHoraCierre() : "  :  ");
             // Observaciones
             jTextAreaObservaciones.setText(documento.getObservaciones());
             // Importes y Totales
@@ -752,6 +839,17 @@ public class DocumentosView extends javax.swing.JDialog {
                 nuevaFila[5] = lineas.getPorcentajeDto().get(i);
                 nuevaFila[6] = lineas.getImporteNeto().get(i);
                 modeloLineas.addRow(nuevaFila);
+            }
+            
+            // Activamos el botón de grabar si no hay fecha de cierre
+            if ((documento.getFechaCierre() == 0)) {
+                jButtonGrabarRegistro.setEnabled(true);
+                int cont = (int) nuevaFila[0] + 1;
+                nuevaFila = null;
+                modeloLineas.addRow(nuevaFila);
+                modeloLineas.setValueAt(cont, modeloLineas.getRowCount() - 1, 0);
+            } else {
+                jButtonGrabarRegistro.setEnabled(false);
             }
         } else {
             newReg = true;
@@ -809,14 +907,18 @@ public class DocumentosView extends javax.swing.JDialog {
     private javax.swing.JComboBox jComboBoxEmpresas;
     private javax.swing.JComboBox jComboBoxTipos;
     private javax.swing.JFormattedTextField jFormattedTextFieldFecha;
+    private javax.swing.JFormattedTextField jFormattedTextFieldFechaCierre;
     private javax.swing.JFormattedTextField jFormattedTextFieldHora;
+    private javax.swing.JFormattedTextField jFormattedTextFieldHoraCierre;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -845,6 +947,7 @@ public class DocumentosView extends javax.swing.JDialog {
     private javax.swing.JTextField jTextFieldPorcentajeIva;
     // End of variables declaration//GEN-END:variables
 
+    private String idDoc;
     private Documento documento;
     private Lineas lineas;
     private boolean newReg;

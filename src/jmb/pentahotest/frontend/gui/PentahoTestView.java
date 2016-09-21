@@ -25,10 +25,12 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
-import jmb.pentahotest.backend.controller.AbstractReportGenerator;
-import jmb.pentahotest.backend.controller.RenderReport;
+import jmb.pentahotest.backend.controller.pdf.AbstractReportGenerator;
+import jmb.pentahotest.backend.controller.pdf.PrintToPdf;
+import jmb.pentahotest.backend.controller.pdf.RenderReport;
 import jmb.pentahotest.backend.model.QueryManager;
 import jmb.pentahotest.frontend.gui.tables.DocumentosView;
+import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 
 /**
@@ -613,19 +615,19 @@ public class PentahoTestView extends javax.swing.JFrame {
         }
 
         try {
-            File outputFilename = null;
             String[] nombreFicheros = new String[numeroCopias];
             for (int i = 0; i < numeroCopias; i++) {
-                nombreFicheros[i] = "Report_" + jTextFieldSeleccion.getText() + "_" + dateFormat.format(date) + ((numeroCopias > 1) ? "_Copia" + (i + 1) : "") + ".pdf";
-                // Create an output filename
-                outputFilename = new File("out" + File.separator + nombreFicheros[i]);
-                // Generate the report
-                new RenderReport(Integer.valueOf(jTextFieldSeleccion.getText()), nombreReport).generateReport(AbstractReportGenerator.OutputType.PDF, outputFilename);
+                nombreFicheros[i] = "RPT_" + jTextFieldSeleccion.getText() + "_" + dateFormat.format(date) + ((numeroCopias > 1) ? "_" + (i + 1) : "") + ".pdf";
             }
-            // Merge pdf
-            
-            Desktop.getDesktop().open(outputFilename);
-            JOptionPane.showMessageDialog(this, "Impreso generado correctamente", "Pentaho Test", 1);
+            PrintToPdf pdf = new PrintToPdf(nombreFicheros, "out");
+            try {
+                pdf.print(jTextFieldSeleccion.getText(), nombreReport);
+                Desktop.getDesktop().open(new File(pdf.getPathSalida()));
+                JOptionPane.showMessageDialog(this, "Impreso generado correctamente", "Pentaho Test", 1);
+            } catch (COSVisitorException ex) {
+                Logger.getLogger(PentahoTestView.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "Error al generar el impreso", "Error", 0);
+            }            
         } catch (IllegalArgumentException | IOException | ReportProcessingException ex) {
             Logger.getLogger(PentahoTestView.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, "Error al generar el impreso", "Error", 0);

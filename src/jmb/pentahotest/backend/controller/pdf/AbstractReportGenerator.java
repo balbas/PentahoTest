@@ -14,7 +14,7 @@
 *
 * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
 */
-package jmb.pentahotest.backend.controller;
+package jmb.pentahotest.backend.controller.pdf;
 
 import java.io.BufferedOutputStream;
 import java.io.File;

@@ -1,9 +1,10 @@
-package jmb.pentahotest.backend.controller;
+package jmb.pentahotest.backend.controller.pdf;
 
 import java.net.URL;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import jmb.pentahotest.backend.controller.PropertiesFileManager;
 import jmb.pentahotest.backend.controller.objects.Report;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.MasterReport;

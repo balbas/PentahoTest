@@ -1,4 +1,4 @@
-package jmb.pentahotest.backend.controller;
+package jmb.pentahotest.backend.controller.render;
 
 import java.text.Format;
 import java.text.DateFormat;

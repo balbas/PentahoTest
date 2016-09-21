@@ -37,6 +37,8 @@ public class Documento {
                 tipo = resultSet.getInt(12);
                 empresa = resultSet.getInt(13);
                 cliente = resultSet.getInt(14);
+                fechaCierre = resultSet.getInt(15);
+                horaCierre = resultSet.getString(16);
             }
         } catch (SQLException ex) {
             Logger.getLogger(Report.class.getName()).log(Level.SEVERE, null, ex);
@@ -50,12 +52,12 @@ public class Documento {
     
     public boolean insert() {
         queryManager = new QueryManager();
-        return queryManager.insertOrUpdate("insert into Documentos(id, numeracion, fecha, hora, observaciones, importe_base, importe_descuento, porcentaje_iva, importe_cuota, importe_total, forma_pago, id_tipo, id_empresa, id_cliente) values(" + id + ", '" + numeracion + "', " + fecha + ", '" + hora + "', '" + observaciones + "', " + importeBase + ", " + importeDescuento + ", " + porcentajeIva + ", " + importeCuota + ", " + importeTotal + ", '" + formaPago + "', " + tipo + ", " + empresa + ", " + cliente + ");");
+        return queryManager.insertOrUpdate("insert into Documentos(id, numeracion, fecha, hora, observaciones, importe_base, importe_descuento, porcentaje_iva, importe_cuota, importe_total, forma_pago, id_tipo, id_empresa, id_cliente, fecha_cierre, hora_cierre) values(" + id + ", '" + numeracion + "', " + fecha + ", '" + hora + "', '" + observaciones + "', " + importeBase + ", " + importeDescuento + ", " + porcentajeIva + ", " + importeCuota + ", " + importeTotal + ", '" + formaPago + "', " + tipo + ", " + empresa + ", " + cliente + ", " + fechaCierre + ", '" + horaCierre + "');");
     }
     
     public boolean update() {
         queryManager = new QueryManager();
-        return queryManager.insertOrUpdate("update Documentos set numeracion = '" + numeracion + "', fecha = " + fecha + ", hora = '" + hora + "', observaciones = '" + observaciones + "', importe_base = " + importeBase + ", importe_descuento = " + importeDescuento + "porcentaje_iva = " + porcentajeIva + ", importe_cuota = " + importeCuota + ", importe_total = " + importeTotal + ", forma_pago = '" + formaPago + "', id_tipo = " + tipo + ", id_empresa = " + empresa + ", id_cliente = " + cliente + " where id = " + id + ";");
+        return queryManager.insertOrUpdate("update Documentos set numeracion = '" + numeracion + "', fecha = " + fecha + ", hora = '" + hora + "', observaciones = '" + observaciones + "', importe_base = " + importeBase + ", importe_descuento = " + importeDescuento + ", porcentaje_iva = " + porcentajeIva + ", importe_cuota = " + importeCuota + ", importe_total = " + importeTotal + ", forma_pago = '" + formaPago + "', id_tipo = " + tipo + ", id_empresa = " + empresa + ", id_cliente = " + cliente + ", fecha_cierre = " + fechaCierre + ", hora_cierre = '" + horaCierre + "' where id = " + id + ";");
     }
     
     public boolean delete() {
@@ -199,6 +201,28 @@ public class Documento {
         this.cliente = cliente;
     }
     
+    public int getFechaCierre() {
+        return fechaCierre;
+    }
+
+    public void setFechaCierre(String fechaCierre) {
+        date = null;
+        try {
+            date = dateFormat.parse(fechaCierre);
+            this.fechaCierre = Integer.valueOf(dateFormatSqlite.format(date));
+        } catch (ParseException ex) {
+            Logger.getLogger(PentahoTestView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public String getHoraCierre() {
+        return horaCierre;
+    }
+
+    public void setHoraCierre(String horaCierre) {
+        this.horaCierre = horaCierre;
+    }
+    
     private QueryManager queryManager;
     private final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
     private final DateFormat dateFormatSqlite = new SimpleDateFormat("yyyyMMdd");
@@ -217,4 +241,6 @@ public class Documento {
     private int tipo;
     private int empresa;
     private int cliente;
+    private int fechaCierre;
+    private String horaCierre;
 }

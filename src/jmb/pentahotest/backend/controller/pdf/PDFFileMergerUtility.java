@@ -1,4 +1,4 @@
-package jmb.pentahotest.backend.controller;
+package jmb.pentahotest.backend.controller.pdf;
 
 import java.io.File;
 import java.io.IOException;

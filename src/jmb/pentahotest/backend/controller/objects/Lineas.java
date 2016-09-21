@@ -28,7 +28,7 @@ public class Lineas {
     
     public Lineas select() {
         queryManager = new QueryManager();
-        ResultSet resultSet = queryManager.execute("select * from Lineas where id_documento = " + documento + " order by contador asc");
+        ResultSet resultSet = queryManager.execute("select * from Lineas where id_documento = " + documento + " order by contador asc;");
         try {
             while (resultSet.next()) {
                 id.add(resultSet.getInt(1));
@@ -75,7 +75,8 @@ public class Lineas {
     }
     
     public boolean delete() {
-        return true;
+        queryManager = new QueryManager();
+        return queryManager.delete("delete from Lineas where id_documento = " + documento + ";");
     }
     
     public int getNextId() {

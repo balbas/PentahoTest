@@ -44,6 +44,20 @@ public class QueryManager {
         }
     }
     
+    public boolean delete(String query) {
+        try {
+            // Preparamos la conexión
+            connection = new Connection();
+            connection.connect();
+            statement = connection.getConnection().createStatement();
+            System.out.println(query);
+            return statement.execute(query);
+        } catch (SQLException ex) {
+            Logger.getLogger(QueryManager.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    
     public void statementClose() {
         try {
             if (statement != null) {
