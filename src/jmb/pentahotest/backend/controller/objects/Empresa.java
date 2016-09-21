@@ -50,7 +50,7 @@ public class Empresa {
     
     public boolean update() {
         queryManager = new QueryManager();
-        return queryManager.insertOrUpdate("update Empresas set nombre = '" + nombre + "', direccion = '" + direccion + "', localidad = '" + localidad + "', cp = '" + cp + "', provincia = '" + provincia + "', pais = '" + pais + "', cif = '" + cif + "', telefono = '" + telefono + "', fax = '" + fax + "', email = '" + email + "', web = '" + web + "' lopd = '" + lopd + "', registro_mercantil = '" + registroMercantil + "' where id = " + id + ";");
+        return queryManager.insertOrUpdate("update Empresas set nombre = '" + nombre + "', direccion = '" + direccion + "', localidad = '" + localidad + "', cp = '" + cp + "', provincia = '" + provincia + "', pais = '" + pais + "', cif = '" + cif + "', telefono = '" + telefono + "', fax = '" + fax + "', email = '" + email + "', web = '" + web + "', lopd = '" + lopd + "', registro_mercantil = '" + registroMercantil + "' where id = " + id + ";");
     }
     
     public boolean delete() {
