@@ -45,12 +45,12 @@ public class Cliente {
     
     public boolean insert() {
         queryManager = new QueryManager();
-        return queryManager.insertOrUpdate("insert into Clientes(id, nombre, apellidos, direccion, cp, localidad, provincia, pais, documento, telefono, movil, fax, email, web) values(" + id + ", '" + nombre + "', '" + apellidos + "', '" + direccion + "', '" + cp + "', '" + localidad + "', '" + provincia + "', '" + pais + "', '" + documento + "', '" + telefono + "', '" + movil + "', '" + fax + "', '" + email + "', '" + web + "');");
+        return queryManager.insertOrUpdateOrDelete("insert into Clientes(id, nombre, apellidos, direccion, cp, localidad, provincia, pais, documento, telefono, movil, fax, email, web) values(" + id + ", '" + nombre + "', '" + apellidos + "', '" + direccion + "', '" + cp + "', '" + localidad + "', '" + provincia + "', '" + pais + "', '" + documento + "', '" + telefono + "', '" + movil + "', '" + fax + "', '" + email + "', '" + web + "');");
     }
     
     public boolean update() {
         queryManager = new QueryManager();
-        return queryManager.insertOrUpdate("update Clientes set nombre = '" + nombre + "', apellidos = '" + apellidos + "', direccion = '" + direccion + "', cp = '" + cp + "', localidad = '" + localidad + "', provincia = '" + provincia + "', pais = '" + pais + "', documento = '" + documento + "', telefono = '" + telefono + "', movil = '" + movil + "', fax = '" + fax + "', email = '" + email + "', web = '" + web + "' where id = " + id + ";");
+        return queryManager.insertOrUpdateOrDelete("update Clientes set nombre = '" + nombre + "', apellidos = '" + apellidos + "', direccion = '" + direccion + "', cp = '" + cp + "', localidad = '" + localidad + "', provincia = '" + provincia + "', pais = '" + pais + "', documento = '" + documento + "', telefono = '" + telefono + "', movil = '" + movil + "', fax = '" + fax + "', email = '" + email + "', web = '" + web + "' where id = " + id + ";");
     }
     
     public boolean delete() {

@@ -27,7 +27,7 @@ public class QueryManager {
         }
     }
     
-    public boolean insertOrUpdate(String query) {
+    public boolean insertOrUpdateOrDelete(String query) {
         try {
             // Preparamos la conexión
             connection = new Connection();
@@ -38,20 +38,6 @@ public class QueryManager {
             //commit();
             connectionClose();
             return true;
-        } catch (SQLException ex) {
-            Logger.getLogger(QueryManager.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-        }
-    }
-    
-    public boolean delete(String query) {
-        try {
-            // Preparamos la conexión
-            connection = new Connection();
-            connection.connect();
-            statement = connection.getConnection().createStatement();
-            System.out.println(query);
-            return statement.execute(query);
         } catch (SQLException ex) {
             Logger.getLogger(QueryManager.class.getName()).log(Level.SEVERE, null, ex);
             return false;

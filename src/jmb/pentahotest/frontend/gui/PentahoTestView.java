@@ -600,12 +600,14 @@ public class PentahoTestView extends javax.swing.JFrame {
         // Datos del report
         String nombreReport = "";
         int numeroCopias = 1;
+        boolean controlImpresion = false;
         QueryManager queryManager = new QueryManager();
-        resultSet = queryManager.execute("select nombre, numero_copias from Reports where id = (select id_report from Tipos where id = (select id_tipo from Documentos where id = " + Integer.valueOf(jTextFieldSeleccion.getText()) + "));");        
+        resultSet = queryManager.execute("select nombre, numero_copias, control_impresion from Reports where id = (select id_report from Tipos where id = (select id_tipo from Documentos where id = " + Integer.valueOf(jTextFieldSeleccion.getText()) + "));");        
         try {
             while (resultSet.next()) {
                 nombreReport = resultSet.getString(1);
                 numeroCopias = resultSet.getInt(2);
+                controlImpresion = (resultSet.getBoolean(3)) ? true : false;
             }
         } catch (SQLException ex) {
             Logger.getLogger(PentahoTestView.class.getName()).log(Level.SEVERE, null, ex);
@@ -619,7 +621,7 @@ public class PentahoTestView extends javax.swing.JFrame {
             for (int i = 0; i < numeroCopias; i++) {
                 nombreFicheros[i] = "RPT_" + jTextFieldSeleccion.getText() + "_" + dateFormat.format(date) + ((numeroCopias > 1) ? "_" + (i + 1) : "") + ".pdf";
             }
-            PrintToPdf pdf = new PrintToPdf(nombreFicheros, "out");
+            PrintToPdf pdf = new PrintToPdf(nombreFicheros, "out", controlImpresion);
             try {
                 pdf.print(jTextFieldSeleccion.getText(), nombreReport);
                 Desktop.getDesktop().open(new File(pdf.getPathSalida()));
@@ -655,7 +657,7 @@ public class PentahoTestView extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemTiposActionPerformed
 
     private void jMenuItemReportsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemReportsActionPerformed
-        new TableView(this, true, "Reports", "select * from Reports order by id asc;", new Object[] { "Id", "Nombre", "Descripción", "Nro.Copias" }).setVisible(true);
+        new TableView(this, true, "Reports", "select * from Reports order by id asc;", new Object[] { "Id", "Nombre", "Descripción", "Nro.Copias", "Control Imp." }).setVisible(true);
     }//GEN-LAST:event_jMenuItemReportsActionPerformed
 
     private void jMenuItemEmpresasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEmpresasActionPerformed

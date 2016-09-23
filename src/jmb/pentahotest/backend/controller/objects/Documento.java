@@ -52,12 +52,12 @@ public class Documento {
     
     public boolean insert() {
         queryManager = new QueryManager();
-        return queryManager.insertOrUpdate("insert into Documentos(id, numeracion, fecha, hora, observaciones, importe_base, importe_descuento, porcentaje_iva, importe_cuota, importe_total, forma_pago, id_tipo, id_empresa, id_cliente, fecha_cierre, hora_cierre) values(" + id + ", '" + numeracion + "', " + fecha + ", '" + hora + "', '" + observaciones + "', " + importeBase + ", " + importeDescuento + ", " + porcentajeIva + ", " + importeCuota + ", " + importeTotal + ", '" + formaPago + "', " + tipo + ", " + empresa + ", " + cliente + ", " + fechaCierre + ", '" + horaCierre + "');");
+        return queryManager.insertOrUpdateOrDelete("insert into Documentos(id, numeracion, fecha, hora, observaciones, importe_base, importe_descuento, porcentaje_iva, importe_cuota, importe_total, forma_pago, id_tipo, id_empresa, id_cliente, fecha_cierre, hora_cierre) values(" + id + ", '" + numeracion + "', " + fecha + ", '" + hora + "', '" + observaciones + "', " + importeBase + ", " + importeDescuento + ", " + porcentajeIva + ", " + importeCuota + ", " + importeTotal + ", '" + formaPago + "', " + tipo + ", " + empresa + ", " + cliente + ", " + fechaCierre + ", '" + horaCierre + "');");
     }
     
     public boolean update() {
         queryManager = new QueryManager();
-        return queryManager.insertOrUpdate("update Documentos set numeracion = '" + numeracion + "', fecha = " + fecha + ", hora = '" + hora + "', observaciones = '" + observaciones + "', importe_base = " + importeBase + ", importe_descuento = " + importeDescuento + ", porcentaje_iva = " + porcentajeIva + ", importe_cuota = " + importeCuota + ", importe_total = " + importeTotal + ", forma_pago = '" + formaPago + "', id_tipo = " + tipo + ", id_empresa = " + empresa + ", id_cliente = " + cliente + ", fecha_cierre = " + fechaCierre + ", hora_cierre = '" + horaCierre + "' where id = " + id + ";");
+        return queryManager.insertOrUpdateOrDelete("update Documentos set numeracion = '" + numeracion + "', fecha = " + fecha + ", hora = '" + hora + "', observaciones = '" + observaciones + "', importe_base = " + importeBase + ", importe_descuento = " + importeDescuento + ", porcentaje_iva = " + porcentajeIva + ", importe_cuota = " + importeCuota + ", importe_total = " + importeTotal + ", forma_pago = '" + formaPago + "', id_tipo = " + tipo + ", id_empresa = " + empresa + ", id_cliente = " + cliente + ", fecha_cierre = " + fechaCierre + ", hora_cierre = '" + horaCierre + "' where id = " + id + ";");
     }
     
     public boolean delete() {
@@ -208,8 +208,12 @@ public class Documento {
     public void setFechaCierre(String fechaCierre) {
         date = null;
         try {
-            date = dateFormat.parse(fechaCierre);
-            this.fechaCierre = Integer.valueOf(dateFormatSqlite.format(date));
+            if (!fechaCierre.equals("0")) {
+                date = dateFormat.parse(fechaCierre);
+                this.fechaCierre = Integer.valueOf(dateFormatSqlite.format(date));
+            } else {
+                this.fechaCierre = 0;
+            }
         } catch (ParseException ex) {
             Logger.getLogger(PentahoTestView.class.getName()).log(Level.SEVERE, null, ex);
         }

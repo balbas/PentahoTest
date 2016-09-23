@@ -1,5 +1,6 @@
 package jmb.pentahotest.frontend.gui.tables;
 
+import java.awt.Color;
 import java.awt.Cursor;
 import javax.swing.JOptionPane;
 import jmb.pentahotest.backend.controller.objects.Empresa;
@@ -140,7 +141,6 @@ public class EmpresasView extends javax.swing.JDialog {
         jLabel14.setText("Fax:");
 
         jButtonGrabarRegistro.setText("Grabar registro");
-        jButtonGrabarRegistro.setEnabled(false);
         jButtonGrabarRegistro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonGrabarRegistroActionPerformed(evt);
@@ -331,32 +331,37 @@ public class EmpresasView extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonGrabarRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGrabarRegistroActionPerformed
-        setCursor(new Cursor(Cursor.WAIT_CURSOR));
-        empresa.setNombre(jTextFieldNombre.getText());
-        empresa.setDireccion((!jTextFieldDireccion.getText().equals("")) ? jTextFieldDireccion.getText() : "");
-        empresa.setCp((!jTextFieldCp.getText().equals("")) ? jTextFieldCp.getText() : "");
-        empresa.setLocalidad((!jTextFieldLocalidad.getText().equals("")) ? jTextFieldLocalidad.getText() : "");
-        empresa.setProvincia((!jTextFieldProvincia.getText().equals("")) ? jTextFieldProvincia.getText() : "");
-        empresa.setPais((!jTextFieldPais.getText().equals("")) ? jTextFieldPais.getText() : "");
-        empresa.setCif((!jTextFieldCif.getText().equals("")) ? jTextFieldCif.getText() : "");
-        empresa.setTelefono((!jTextFieldTelefono.getText().equals("")) ? jTextFieldTelefono.getText() : "");
-        empresa.setFax((!jTextFieldFax.getText().equals("")) ? jTextFieldFax.getText() : "");
-        empresa.setEmail((!jTextFieldEmail.getText().equals("")) ? jTextFieldEmail.getText() : "");
-        empresa.setWeb((!jTextFieldWeb.getText().equals("")) ? jTextFieldWeb.getText() : "");
-        empresa.setLopd((!jTextAreaLopd.getText().equals("")) ? jTextAreaLopd.getText() : "");
-        empresa.setRegistroMercantil((!jTextAreaRegistroMercantil.getText().equals("")) ? jTextAreaRegistroMercantil.getText() : "");
-        if (newReg) {
-            if (empresa.insert()) {
-                JOptionPane.showMessageDialog(this, "Registro grabado correctamente", "Empresas", 1);
-                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-                dispose();
+        if (!jTextFieldNombre.getText().equals("")) {
+            setCursor(new Cursor(Cursor.WAIT_CURSOR));
+            empresa.setNombre(jTextFieldNombre.getText());
+            empresa.setDireccion((!jTextFieldDireccion.getText().equals("")) ? jTextFieldDireccion.getText() : "");
+            empresa.setCp((!jTextFieldCp.getText().equals("")) ? jTextFieldCp.getText() : "");
+            empresa.setLocalidad((!jTextFieldLocalidad.getText().equals("")) ? jTextFieldLocalidad.getText() : "");
+            empresa.setProvincia((!jTextFieldProvincia.getText().equals("")) ? jTextFieldProvincia.getText() : "");
+            empresa.setPais((!jTextFieldPais.getText().equals("")) ? jTextFieldPais.getText() : "");
+            empresa.setCif((!jTextFieldCif.getText().equals("")) ? jTextFieldCif.getText() : "");
+            empresa.setTelefono((!jTextFieldTelefono.getText().equals("")) ? jTextFieldTelefono.getText() : "");
+            empresa.setFax((!jTextFieldFax.getText().equals("")) ? jTextFieldFax.getText() : "");
+            empresa.setEmail((!jTextFieldEmail.getText().equals("")) ? jTextFieldEmail.getText() : "");
+            empresa.setWeb((!jTextFieldWeb.getText().equals("")) ? jTextFieldWeb.getText() : "");
+            empresa.setLopd((!jTextAreaLopd.getText().equals("")) ? jTextAreaLopd.getText() : "");
+            empresa.setRegistroMercantil((!jTextAreaRegistroMercantil.getText().equals("")) ? jTextAreaRegistroMercantil.getText() : "");
+            if (newReg) {
+                if (empresa.insert()) {
+                    JOptionPane.showMessageDialog(this, "Registro grabado correctamente", "Empresas", 1);
+                    setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                    dispose();
+                }
+            } else {
+                if (empresa.update()) {
+                    JOptionPane.showMessageDialog(this, "Registro actualizado correctamente", "Empresas", 1);
+                    setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                    dispose();
+                }
             }
         } else {
-            if (empresa.update()) {
-                JOptionPane.showMessageDialog(this, "Registro actualizado correctamente", "Empresas", 1);
-                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-                dispose();
-            }
+            jTextFieldNombre.setBackground(new Color(255, 224, 224));
+            JOptionPane.showMessageDialog(this, "Rellene los campos obligatorios", "Error", 0);
         }
     }//GEN-LAST:event_jButtonGrabarRegistroActionPerformed
 
@@ -365,11 +370,7 @@ public class EmpresasView extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private void jTextFieldNombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldNombreFocusLost
-        if (!jTextFieldNombre.getText().equals("")) {
-            jButtonGrabarRegistro.setEnabled(true);
-        } else {
-            jButtonGrabarRegistro.setEnabled(false);
-        }
+        if (!jTextFieldNombre.getText().equals("")) jTextFieldNombre.setBackground(Color.white);
     }//GEN-LAST:event_jTextFieldNombreFocusLost
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -1,10 +1,12 @@
 package jmb.pentahotest.frontend.gui.tables;
 
+import java.awt.Color;
 import java.awt.Cursor;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import jmb.pentahotest.backend.controller.objects.Tipo;
 import jmb.pentahotest.backend.model.QueryManager;
@@ -17,6 +19,7 @@ public class TiposView extends javax.swing.JDialog {
 
     /**
      * Creates new form TiposView
+     * 
      * @param parent
      * @param modal
      * @param id
@@ -89,6 +92,7 @@ public class TiposView extends javax.swing.JDialog {
         jButtonGrabarRegistro = new javax.swing.JButton();
         jButtonCancelar = new javax.swing.JButton();
         jComboBoxReports = new javax.swing.JComboBox();
+        jLabelObligatorio = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -110,7 +114,6 @@ public class TiposView extends javax.swing.JDialog {
         jLabel2.setText("Report:");
 
         jButtonGrabarRegistro.setText("Grabar registro");
-        jButtonGrabarRegistro.setEnabled(false);
         jButtonGrabarRegistro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonGrabarRegistroActionPerformed(evt);
@@ -125,27 +128,41 @@ public class TiposView extends javax.swing.JDialog {
         });
 
         jComboBoxReports.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxReports.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBoxReportsItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButtonGrabarRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jTextFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldDescripcion)
-                    .addComponent(jComboBoxReports, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldDescripcion)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jTextFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jComboBoxReports, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabelObligatorio)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)))))
+                .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,35 +178,42 @@ public class TiposView extends javax.swing.JDialog {
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBoxReports, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
+                    .addComponent(jComboBoxReports, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelObligatorio))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonGrabarRegistro)
                     .addComponent(jButtonCancelar))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonGrabarRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGrabarRegistroActionPerformed
-        setCursor(new Cursor(Cursor.WAIT_CURSOR));
-        tipo.setDescripcion((!jTextFieldDescripcion.getText().equals("")) ? jTextFieldDescripcion.getText() : "");
-        String report = jComboBoxReports.getSelectedItem().toString();
-        String[] idReport = report.split("-");
-        tipo.setReport(Integer.valueOf(idReport[0]));
-        if (newReg) {
-            if (tipo.insert()) {
-                JOptionPane.showMessageDialog(this, "Registro grabado correctamente", "Tipos", 1);
-                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-                dispose();
+        if (!jTextFieldDescripcion.getText().equals("") && !jComboBoxReports.getSelectedItem().toString().equals("Seleccione report...")) {
+            setCursor(new Cursor(Cursor.WAIT_CURSOR));
+            tipo.setDescripcion(jTextFieldDescripcion.getText());
+            String report = jComboBoxReports.getSelectedItem().toString();
+            String[] idReport = report.split("-");
+            tipo.setReport(Integer.valueOf(idReport[0]));
+            if (newReg) {
+                if (tipo.insert()) {
+                    JOptionPane.showMessageDialog(this, "Registro grabado correctamente", "Tipos", 1);
+                    setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                    dispose();
+                }
+            } else {
+                if (tipo.update()) {
+                    JOptionPane.showMessageDialog(this, "Registro actualizado correctamente", "Tipos", 1);
+                    setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                    dispose();
+                }
             }
         } else {
-            if (tipo.update()) {
-                JOptionPane.showMessageDialog(this, "Registro actualizado correctamente", "Tipos", 1);
-                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-                dispose();
-            }
+            jTextFieldDescripcion.setBackground(new Color(255, 224, 224));
+            jLabelObligatorio.setIcon(new ImageIcon(getClass().getResource("/jmb/pentahotest/backend/controller/resources/icons/flecha.png")));
+            JOptionPane.showMessageDialog(this, "Rellene los campos obligatorios", "Error", 0);
         }
     }//GEN-LAST:event_jButtonGrabarRegistroActionPerformed
 
@@ -198,12 +222,14 @@ public class TiposView extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private void jTextFieldDescripcionFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldDescripcionFocusLost
-        if (!jTextFieldDescripcion.getText().equals("")) {
-            jButtonGrabarRegistro.setEnabled(true);
-        } else {
-            jButtonGrabarRegistro.setEnabled(false);
-        }
+        if (!jTextFieldDescripcion.getText().equals("")) jTextFieldDescripcion.setBackground(Color.white);
     }//GEN-LAST:event_jTextFieldDescripcionFocusLost
+
+    private void jComboBoxReportsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxReportsItemStateChanged
+        if (jComboBoxReports.getSelectedItem() != null) {
+            if (!jComboBoxReports.getSelectedItem().toString().equals("Seleccione report...")) jLabelObligatorio.setIcon(null);
+        }
+    }//GEN-LAST:event_jComboBoxReportsItemStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCancelar;
@@ -212,6 +238,7 @@ public class TiposView extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabelObligatorio;
     private javax.swing.JTextField jTextFieldDescripcion;
     private javax.swing.JTextField jTextFieldId;
     // End of variables declaration//GEN-END:variables

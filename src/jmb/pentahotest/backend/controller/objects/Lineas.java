@@ -56,7 +56,7 @@ public class Lineas {
         boolean result = false;
         queryManager = new QueryManager();
         for (int i = 0; i < id.size(); i++){
-            result = queryManager.insertOrUpdate("insert into Lineas(id, contador, referencia, descripcion, cantidad, precio_unitario, porcentaje_descuento, importe_bruto, importe_descuento, importe_neto, id_documento) values(" + id.get(i) + ", " + contador.get(i) + ", '" + referencia.get(i) + "', '" + descripcion.get(i) + "', " + cantidad.get(i) + ", " + precioUnitario.get(i) + ", " + porcentajeDto.get(i) + ", " + importeBruto.get(i) + ", " + importeDto.get(i) + ", " + importeNeto.get(i) + ", " + documento + ");");
+            result = queryManager.insertOrUpdateOrDelete("insert into Lineas(id, contador, referencia, descripcion, cantidad, precio_unitario, porcentaje_descuento, importe_bruto, importe_descuento, importe_neto, id_documento) values(" + id.get(i) + ", " + contador.get(i) + ", '" + referencia.get(i) + "', '" + descripcion.get(i) + "', " + cantidad.get(i) + ", " + precioUnitario.get(i) + ", " + porcentajeDto.get(i) + ", " + importeBruto.get(i) + ", " + importeDto.get(i) + ", " + importeNeto.get(i) + ", " + documento + ");");
             if (!result) break;
         }
         
@@ -67,7 +67,7 @@ public class Lineas {
         boolean result = false;
         queryManager = new QueryManager();
         for (int i = 0; i < id.size(); i++){
-            result = queryManager.insertOrUpdate("update Lineas set contador = " + contador.get(i) + ", referencia = '" + referencia.get(i) + "', descripcion = '" + descripcion.get(i) + "', cantidad = " + cantidad.get(i) + ", precio_unitario = " + precioUnitario.get(i) + ", porcentaje_descuento = " + porcentajeDto.get(i) + ", importe_bruto = " + importeBruto.get(i) + ", importe_descuento = " + importeDto.get(i) + ", importe_neto = " + importeNeto.get(i) + " where id_documento = " + documento + ";");
+            result = queryManager.insertOrUpdateOrDelete("update Lineas set contador = " + contador.get(i) + ", referencia = '" + referencia.get(i) + "', descripcion = '" + descripcion.get(i) + "', cantidad = " + cantidad.get(i) + ", precio_unitario = " + precioUnitario.get(i) + ", porcentaje_descuento = " + porcentajeDto.get(i) + ", importe_bruto = " + importeBruto.get(i) + ", importe_descuento = " + importeDto.get(i) + ", importe_neto = " + importeNeto.get(i) + " where id_documento = " + documento + ";");
             if (!result) break;
         }
         
@@ -76,7 +76,7 @@ public class Lineas {
     
     public boolean delete() {
         queryManager = new QueryManager();
-        return queryManager.delete("delete from Lineas where id_documento = " + documento + ";");
+        return queryManager.insertOrUpdateOrDelete("delete from Lineas where id_documento = " + documento + ";");
     }
     
     public int getNextId() {

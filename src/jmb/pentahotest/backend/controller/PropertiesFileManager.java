@@ -66,6 +66,12 @@ public class PropertiesFileManager {
     public final static String BBDD_URL = "UrlDataBase";
     public final static String BBDD_USER = "UserDataBase";
     public final static String BBDD_PASSWORD = "PassDataBase";
+    public final static String WM_POS_X = "PosXWatermark";
+    public final static String WM_POS_Y = "PosYWatermark";
+    public final static String WM_ROTATION = "RotationWatermark";
+    public final static String WM_FONT = "FontWatermark";
+    public final static String WM_FONT_SIZE = "FontSizeWatermark";
+    public final static String WM_FONT_COLOR = "FontColorWatermark";
     // Ruta de acceso al fichero properties    
     private final static String url = System.getProperty("user.dir") + File.separator + PROPERTIES_FILE_NAME;
 }

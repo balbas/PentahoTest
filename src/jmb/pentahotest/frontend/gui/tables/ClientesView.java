@@ -1,5 +1,6 @@
 package jmb.pentahotest.frontend.gui.tables;
 
+import java.awt.Color;
 import java.awt.Cursor;
 import javax.swing.JOptionPane;
 import jmb.pentahotest.backend.controller.objects.Cliente;
@@ -26,7 +27,6 @@ public class ClientesView extends javax.swing.JDialog {
         
         if (!id.equals("")) {
             newReg = false;
-            jButtonGrabarRegistro.setEnabled(true);
             jTextFieldId.setText(id);
             cliente.setId(Integer.valueOf(id));
             cliente = cliente.select();
@@ -143,7 +143,6 @@ public class ClientesView extends javax.swing.JDialog {
         jLabel14.setText("Fax:");
 
         jButtonGrabarRegistro.setText("Grabar registro");
-        jButtonGrabarRegistro.setEnabled(false);
         jButtonGrabarRegistro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonGrabarRegistroActionPerformed(evt);
@@ -300,32 +299,37 @@ public class ClientesView extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonGrabarRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGrabarRegistroActionPerformed
-        setCursor(new Cursor(Cursor.WAIT_CURSOR));
-        cliente.setNombre(jTextFieldNombre.getText());
-        cliente.setApellidos((!jTextFieldApellidos.getText().equals("")) ? jTextFieldApellidos.getText() : "");
-        cliente.setDireccion((!jTextFieldDireccion.getText().equals("")) ? jTextFieldDireccion.getText() : "");
-        cliente.setCp((!jTextFieldCp.getText().equals("")) ? jTextFieldCp.getText() : "");
-        cliente.setLocalidad((!jTextFieldLocalidad.getText().equals("")) ? jTextFieldLocalidad.getText() : "");
-        cliente.setProvincia((!jTextFieldProvincia.getText().equals("")) ? jTextFieldProvincia.getText() : "");
-        cliente.setPais((!jTextFieldPais.getText().equals("")) ? jTextFieldPais.getText() : "");
-        cliente.setDocumento((!jTextFieldDni.getText().equals("")) ? jTextFieldDni.getText() : "");
-        cliente.setTelefono((!jTextFieldTelefonoFijo.getText().equals("")) ? jTextFieldTelefonoFijo.getText() : "");
-        cliente.setMovil((!jTextFieldTelefonoMovil.getText().equals("")) ? jTextFieldTelefonoMovil.getText() : "");
-        cliente.setFax((!jTextFieldFax.getText().equals("")) ? jTextFieldFax.getText() : "");
-        cliente.setEmail((!jTextFieldEmail.getText().equals("")) ? jTextFieldEmail.getText() : "");
-        cliente.setWeb((!jTextFieldWeb.getText().equals("")) ? jTextFieldWeb.getText() : "");
-        if (newReg) {
-            if (cliente.insert()) {
-                JOptionPane.showMessageDialog(this, "Registro grabado correctamente", "Clientes", 1);
-                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-                dispose();
+        if (!jTextFieldNombre.getText().equals("")) {
+            setCursor(new Cursor(Cursor.WAIT_CURSOR));
+            cliente.setNombre(jTextFieldNombre.getText());
+            cliente.setApellidos((!jTextFieldApellidos.getText().equals("")) ? jTextFieldApellidos.getText() : "");
+            cliente.setDireccion((!jTextFieldDireccion.getText().equals("")) ? jTextFieldDireccion.getText() : "");
+            cliente.setCp((!jTextFieldCp.getText().equals("")) ? jTextFieldCp.getText() : "");
+            cliente.setLocalidad((!jTextFieldLocalidad.getText().equals("")) ? jTextFieldLocalidad.getText() : "");
+            cliente.setProvincia((!jTextFieldProvincia.getText().equals("")) ? jTextFieldProvincia.getText() : "");
+            cliente.setPais((!jTextFieldPais.getText().equals("")) ? jTextFieldPais.getText() : "");
+            cliente.setDocumento((!jTextFieldDni.getText().equals("")) ? jTextFieldDni.getText() : "");
+            cliente.setTelefono((!jTextFieldTelefonoFijo.getText().equals("")) ? jTextFieldTelefonoFijo.getText() : "");
+            cliente.setMovil((!jTextFieldTelefonoMovil.getText().equals("")) ? jTextFieldTelefonoMovil.getText() : "");
+            cliente.setFax((!jTextFieldFax.getText().equals("")) ? jTextFieldFax.getText() : "");
+            cliente.setEmail((!jTextFieldEmail.getText().equals("")) ? jTextFieldEmail.getText() : "");
+            cliente.setWeb((!jTextFieldWeb.getText().equals("")) ? jTextFieldWeb.getText() : "");
+            if (newReg) {
+                if (cliente.insert()) {
+                    JOptionPane.showMessageDialog(this, "Registro grabado correctamente", "Clientes", 1);
+                    setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                    dispose();
+                }
+            } else {
+                if (cliente.update()) {
+                    JOptionPane.showMessageDialog(this, "Registro actualizado correctamente", "Clientes", 1);
+                    setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                    dispose();
+                }
             }
         } else {
-            if (cliente.update()) {
-                JOptionPane.showMessageDialog(this, "Registro actualizado correctamente", "Clientes", 1);
-                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-                dispose();
-            }
+            jTextFieldNombre.setBackground(new Color(255, 224, 224));
+            JOptionPane.showMessageDialog(this, "Rellene los campos obligatorios", "Error", 0);
         }
     }//GEN-LAST:event_jButtonGrabarRegistroActionPerformed
 
@@ -334,11 +338,7 @@ public class ClientesView extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private void jTextFieldNombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldNombreFocusLost
-        if (!jTextFieldNombre.getText().equals("")) {
-            jButtonGrabarRegistro.setEnabled(true);
-        } else {
-            jButtonGrabarRegistro.setEnabled(false);
-        }
+        if (!jTextFieldNombre.getText().equals("")) jTextFieldNombre.setBackground(Color.white);
     }//GEN-LAST:event_jTextFieldNombreFocusLost
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

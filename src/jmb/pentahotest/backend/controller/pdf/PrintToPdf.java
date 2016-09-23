@@ -2,7 +2,11 @@ package jmb.pentahotest.backend.controller.pdf;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import jmb.pentahotest.backend.controller.PropertiesFileManager;
 import org.apache.pdfbox.exceptions.COSVisitorException;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 
 /**
@@ -11,9 +15,10 @@ import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
  */
 public class PrintToPdf {
     
-    public PrintToPdf(String[] ficheros, String pathSalida) {
+    public PrintToPdf(String[] ficheros, String pathSalida, boolean controlImpresion) {
         this.ficheros = ficheros;
         this.pathSalida = pathSalida;
+        this.controlImpresion = controlImpresion;
     }
 
     public String[] getFicheros() {
@@ -52,6 +57,23 @@ public class PrintToPdf {
             // Actualizamos el valor de pathSalida para poder abrir el fichero una vez generado
             pathSalida += File.separator + ficheros[0];
         }
+        
+        // Añadimos la marca de agua si fuera necesario (ORIGINAL / COPIA)
+        if (controlImpresion) {
+            String[] textoCopias = new String[ficheros.length];
+            for (int i = 0; i < ficheros.length; i++) {
+                if (i == 0) {
+                    textoCopias[i] = "ORIGINAL";
+                } else {
+                    textoCopias[i] = "COPIA";
+                }
+            }
+            try {
+                new Watermark(textoCopias).addTextWatermark(Integer.valueOf(PropertiesFileManager.getInstance().getProperty(PropertiesFileManager.WM_POS_X)), Integer.valueOf(PropertiesFileManager.getInstance().getProperty(PropertiesFileManager.WM_POS_Y)), Integer.valueOf(PropertiesFileManager.getInstance().getProperty(PropertiesFileManager.WM_ROTATION)), PDType1Font.getStandardFont(PropertiesFileManager.getInstance().getProperty(PropertiesFileManager.WM_FONT)), Integer.valueOf(PropertiesFileManager.getInstance().getProperty(PropertiesFileManager.WM_FONT_SIZE)), PropertiesFileManager.getInstance().getProperty(PropertiesFileManager.WM_FONT_COLOR), pathSalida);
+            } catch (Exception ex) {
+                Logger.getLogger(PrintToPdf.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     /**
@@ -79,6 +101,7 @@ public class PrintToPdf {
         }
     }
     
-    String[] ficheros;
-    String pathSalida;
+    private String[] ficheros;
+    private String pathSalida;
+    private boolean controlImpresion;
 }

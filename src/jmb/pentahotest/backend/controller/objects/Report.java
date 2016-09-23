@@ -22,6 +22,8 @@ public class Report {
                 nombre = resultSet.getString(2);
                 descripcion = resultSet.getString(3);
                 numeroCopias = resultSet.getInt(4);
+                controlImpresion = (resultSet.getBoolean(5)) ? true : false;
+                System.out.println(controlImpresion);
             }
         } catch (SQLException ex) {
             Logger.getLogger(Report.class.getName()).log(Level.SEVERE, null, ex);
@@ -35,12 +37,12 @@ public class Report {
     
     public boolean insert() {
         queryManager = new QueryManager();
-        return queryManager.insertOrUpdate("insert into Reports(id, nombre, descripcion, numero_copias) values(" + id + ", '" + nombre + "', '" + descripcion + "', " + numeroCopias + ");");
+        return queryManager.insertOrUpdateOrDelete("insert into Reports(id, nombre, descripcion, numero_copias, control_impresion) values(" + id + ", '" + nombre + "', '" + descripcion + "', " + numeroCopias + ", " + ((controlImpresion) ? 1 : 0) + ");");
     }
     
     public boolean update() {
         queryManager = new QueryManager();
-        return queryManager.insertOrUpdate("update Reports set nombre = '" + nombre + "', descripcion = '" + descripcion + "', numero_copias = " + numeroCopias + " where id = " + id + ";");
+        return queryManager.insertOrUpdateOrDelete("update Reports set nombre = '" + nombre + "', descripcion = '" + descripcion + "', numero_copias = " + numeroCopias + ", control_impresion = " + ((controlImpresion) ? 1 : 0) + " where id = " + id + ";");
     }
     
     public boolean delete() {
@@ -98,9 +100,18 @@ public class Report {
         this.numeroCopias = numeroCopias;
     }
     
+    public boolean getControlImpresion() {
+        return controlImpresion;
+    }
+    
+    public void setControlImpresion(boolean controlImpresion) {
+        this.controlImpresion = controlImpresion;
+    }
+    
     private QueryManager queryManager;
     private int id;
     private String nombre;
     private String descripcion;
     private int numeroCopias;
+    private boolean controlImpresion;
 }

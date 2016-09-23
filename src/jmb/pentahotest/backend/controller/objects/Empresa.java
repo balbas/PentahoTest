@@ -45,12 +45,12 @@ public class Empresa {
     
     public boolean insert() {
         queryManager = new QueryManager();
-        return queryManager.insertOrUpdate("insert into Empresas(id, nombre, direccion, localidad, cp, provincia, pais, cif, telefono, fax, email, web, lopd, registro_mercantil) values(" + id + ", '" + nombre + "', '" + direccion + "', '" + localidad + "', '" + cp + "', '" + provincia + "', '" + pais + "', '" + cif + "', '" + telefono + "', '" + fax + "', '" + email + "', '" + web + "', '" + lopd + "', '" + registroMercantil + "' );");
+        return queryManager.insertOrUpdateOrDelete("insert into Empresas(id, nombre, direccion, localidad, cp, provincia, pais, cif, telefono, fax, email, web, lopd, registro_mercantil) values(" + id + ", '" + nombre + "', '" + direccion + "', '" + localidad + "', '" + cp + "', '" + provincia + "', '" + pais + "', '" + cif + "', '" + telefono + "', '" + fax + "', '" + email + "', '" + web + "', '" + lopd + "', '" + registroMercantil + "' );");
     }
     
     public boolean update() {
         queryManager = new QueryManager();
-        return queryManager.insertOrUpdate("update Empresas set nombre = '" + nombre + "', direccion = '" + direccion + "', localidad = '" + localidad + "', cp = '" + cp + "', provincia = '" + provincia + "', pais = '" + pais + "', cif = '" + cif + "', telefono = '" + telefono + "', fax = '" + fax + "', email = '" + email + "', web = '" + web + "', lopd = '" + lopd + "', registro_mercantil = '" + registroMercantil + "' where id = " + id + ";");
+        return queryManager.insertOrUpdateOrDelete("update Empresas set nombre = '" + nombre + "', direccion = '" + direccion + "', localidad = '" + localidad + "', cp = '" + cp + "', provincia = '" + provincia + "', pais = '" + pais + "', cif = '" + cif + "', telefono = '" + telefono + "', fax = '" + fax + "', email = '" + email + "', web = '" + web + "', lopd = '" + lopd + "', registro_mercantil = '" + registroMercantil + "' where id = " + id + ";");
     }
     
     public boolean delete() {

@@ -34,12 +34,12 @@ public class Tipo {
     
     public boolean insert() {
         queryManager = new QueryManager();
-        return queryManager.insertOrUpdate("insert into Tipos(id, descripcion, id_report) values(" + id + ", '" + descripcion + "', " + report + ");");
+        return queryManager.insertOrUpdateOrDelete("insert into Tipos(id, descripcion, id_report) values(" + id + ", '" + descripcion + "', " + report + ");");
     }
     
     public boolean update() {
         queryManager = new QueryManager();
-        return queryManager.insertOrUpdate("update Tipos set descripcion = '" + descripcion + "', id_report = " + report + " where id = " + id + ";");
+        return queryManager.insertOrUpdateOrDelete("update Tipos set descripcion = '" + descripcion + "', id_report = " + report + " where id = " + id + ";");
     }
     
     public boolean delete() {

@@ -1,5 +1,6 @@
 package jmb.pentahotest.frontend.gui.tables;
 
+import java.awt.Color;
 import java.awt.Cursor;
 import javax.swing.JOptionPane;
 import jmb.pentahotest.backend.controller.objects.Report;
@@ -12,6 +13,7 @@ public class ReportsView extends javax.swing.JDialog {
 
     /**
      * Creates new form ReportsView
+     * 
      * @param parent
      * @param modal
      * @param id
@@ -26,13 +28,13 @@ public class ReportsView extends javax.swing.JDialog {
         
         if (!id.equals("")) {
             newReg = false;
-            jButtonGrabarRegistro.setEnabled(true);
             jTextFieldId.setText(id);
             report.setId(Integer.valueOf(id));
             report = report.select();
             jTextFieldNombre.setText(report.getNombre());
             jTextFieldDescripcion.setText(report.getDescripcion());
             jTextFieldNumeroCopias.setText(String.valueOf(report.getNumeroCopias()));
+            jCheckBoxControlImpresion.setSelected(report.getControlImpresion());
         } else {
             newReg = true;
             jTextFieldId.setText(String.valueOf(report.getNextId()));
@@ -59,6 +61,7 @@ public class ReportsView extends javax.swing.JDialog {
         jButtonCancelar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jTextFieldId = new javax.swing.JTextField();
+        jCheckBoxControlImpresion = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -78,7 +81,6 @@ public class ReportsView extends javax.swing.JDialog {
         });
 
         jButtonGrabarRegistro.setText("Grabar registro");
-        jButtonGrabarRegistro.setEnabled(false);
         jButtonGrabarRegistro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonGrabarRegistroActionPerformed(evt);
@@ -97,6 +99,8 @@ public class ReportsView extends javax.swing.JDialog {
 
         jTextFieldId.setEnabled(false);
 
+        jCheckBoxControlImpresion.setText("Activar ORIGNAL / COPIA");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -109,9 +113,12 @@ public class ReportsView extends javax.swing.JDialog {
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldNumeroCopias, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jTextFieldNumeroCopias, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jCheckBoxControlImpresion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jButtonGrabarRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -136,11 +143,12 @@ public class ReportsView extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jTextFieldDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
+                .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextFieldNumeroCopias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
+                    .addComponent(jTextFieldNumeroCopias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCheckBoxControlImpresion))
+                .addGap(8, 8, 8)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonGrabarRegistro)
                     .addComponent(jButtonCancelar))
@@ -151,22 +159,28 @@ public class ReportsView extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonGrabarRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGrabarRegistroActionPerformed
-        setCursor(new Cursor(Cursor.WAIT_CURSOR));
-        report.setNombre(jTextFieldNombre.getText());
-        report.setDescripcion((!jTextFieldDescripcion.getText().equals("")) ? jTextFieldDescripcion.getText() : "");
-        report.setNumeroCopias((!jTextFieldNumeroCopias.getText().equals("")) ? Integer.valueOf(jTextFieldNumeroCopias.getText()) : 0);
-        if (newReg) {
-            if (report.insert()) {
-                JOptionPane.showMessageDialog(this, "Registro grabado correctamente", "Reports", 1);
-                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-                dispose();
+        if (!jTextFieldNombre.getText().equals("")) {
+            setCursor(new Cursor(Cursor.WAIT_CURSOR));
+            report.setNombre(jTextFieldNombre.getText());
+            report.setDescripcion((!jTextFieldDescripcion.getText().equals("")) ? jTextFieldDescripcion.getText() : "");
+            report.setNumeroCopias((!jTextFieldNumeroCopias.getText().equals("")) ? Integer.valueOf(jTextFieldNumeroCopias.getText()) : 0);
+            report.setControlImpresion(jCheckBoxControlImpresion.isSelected());
+            if (newReg) {
+                if (report.insert()) {
+                    JOptionPane.showMessageDialog(this, "Registro grabado correctamente", "Reports", 1);
+                    setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                    dispose();
+                }
+            } else {
+                if (report.update()) {
+                    JOptionPane.showMessageDialog(this, "Registro actualizado correctamente", "Reports", 1);
+                    setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                    dispose();
+                }
             }
         } else {
-            if (report.update()) {
-                JOptionPane.showMessageDialog(this, "Registro actualizado correctamente", "Reports", 1);
-                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-                dispose();
-            }
+            jTextFieldNombre.setBackground(new Color(255, 224, 224));
+            JOptionPane.showMessageDialog(this, "Rellene los campos obligatorios", "Error", 0);
         }
     }//GEN-LAST:event_jButtonGrabarRegistroActionPerformed
 
@@ -175,16 +189,13 @@ public class ReportsView extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private void jTextFieldNombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldNombreFocusLost
-        if (!jTextFieldNombre.getText().equals("")) {
-            jButtonGrabarRegistro.setEnabled(true);
-        } else {
-            jButtonGrabarRegistro.setEnabled(false);
-        }
+        if (!jTextFieldNombre.getText().equals("")) jTextFieldNombre.setBackground(Color.white);
     }//GEN-LAST:event_jTextFieldNombreFocusLost
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonGrabarRegistro;
+    private javax.swing.JCheckBox jCheckBoxControlImpresion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

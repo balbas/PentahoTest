@@ -1,5 +1,6 @@
 package jmb.pentahotest.frontend.gui.tables;
 
+import java.awt.Color;
 import java.awt.Cursor;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -109,6 +111,9 @@ public class DocumentosView extends javax.swing.JDialog {
         jLabelTotalNeto = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabelTotalDto = new javax.swing.JLabel();
+        jLabelObligatorio1 = new javax.swing.JLabel();
+        jLabelObligatorio2 = new javax.swing.JLabel();
+        jLabelObligatorio3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -127,6 +132,9 @@ public class DocumentosView extends javax.swing.JDialog {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jFormattedTextFieldFechaFocusGained(evt);
             }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jFormattedTextFieldFechaFocusLost(evt);
+            }
         });
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -136,17 +144,30 @@ public class DocumentosView extends javax.swing.JDialog {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jFormattedTextFieldHoraFocusGained(evt);
             }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jFormattedTextFieldHoraFocusLost(evt);
+            }
         });
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel5.setText("Empresa:");
 
         jComboBoxEmpresas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxEmpresas.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBoxEmpresasItemStateChanged(evt);
+            }
+        });
 
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel6.setText("Cliente:");
 
         jComboBoxClientes.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxClientes.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBoxClientesItemStateChanged(evt);
+            }
+        });
 
         jPanel1.setPreferredSize(new java.awt.Dimension(735, 289));
 
@@ -384,6 +405,11 @@ public class DocumentosView extends javax.swing.JDialog {
         jLabel7.setText("Tipo:");
 
         jComboBoxTipos.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxTipos.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBoxTiposItemStateChanged(evt);
+            }
+        });
 
         jLabel8.setText("Total Neto:");
 
@@ -421,7 +447,9 @@ public class DocumentosView extends javax.swing.JDialog {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jComboBoxClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jComboBoxClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabelObligatorio3))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -429,11 +457,16 @@ public class DocumentosView extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jTextFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jComboBoxTipos, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jComboBoxTipos, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabelObligatorio1))))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jComboBoxEmpresas, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jComboBoxEmpresas, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabelObligatorio2))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -462,11 +495,13 @@ public class DocumentosView extends javax.swing.JDialog {
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jComboBoxTipos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxTipos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelObligatorio1))
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jComboBoxEmpresas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxEmpresas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelObligatorio2))
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -480,7 +515,8 @@ public class DocumentosView extends javax.swing.JDialog {
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jComboBoxClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelObligatorio3))
                 .addGap(10, 10, 10)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
@@ -561,7 +597,6 @@ public class DocumentosView extends javax.swing.JDialog {
             ArrayList<Double> importeDto = new ArrayList();
             ArrayList<Double> importeNeto = new ArrayList();
             int contadorReal = 1;
-            System.out.println(modeloLineas.getRowCount());
             for (int i = 0; i < modeloLineas.getRowCount(); i++) {
                 if (modeloLineas.getValueAt(i, 2) != null) {
                     id.add(lineas.getNextId() + i);
@@ -605,19 +640,24 @@ public class DocumentosView extends javax.swing.JDialog {
                             setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                             dispose();
                         } else {
-                            System.out.println("Error al insertar lineas");
                             JOptionPane.showMessageDialog(this, "Error al actualizar el registro", "Error", 0);
                         }
                     } else {
-                        System.out.println("Error al borrar lineas");
                         JOptionPane.showMessageDialog(this, "Error al actualizar el registro", "Error", 0);
                     }
                 } else {
-                    System.out.println("Error al actualizar documento");
                     JOptionPane.showMessageDialog(this, "Error al actualizar el registro", "Error", 0);
                 }
             }
             setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        } else {
+            jLabelObligatorio1.setIcon(new ImageIcon(getClass().getResource("/jmb/pentahotest/backend/controller/resources/icons/flecha.png")));
+            jLabelObligatorio2.setIcon(new ImageIcon(getClass().getResource("/jmb/pentahotest/backend/controller/resources/icons/flecha.png")));
+            jLabelObligatorio3.setIcon(new ImageIcon(getClass().getResource("/jmb/pentahotest/backend/controller/resources/icons/flecha.png")));
+            jFormattedTextFieldFecha.setBackground(new Color(255, 224, 224));
+            jFormattedTextFieldHora.setBackground(new Color(255, 224, 224));
+            jFormattedTextFieldFecha.setBackground(new Color(255, 224, 224));
+            JOptionPane.showMessageDialog(this, "Rellene los campos obligatorios", "Error", 0);
         }
     }//GEN-LAST:event_jButtonGrabarRegistroActionPerformed
 
@@ -659,6 +699,32 @@ public class DocumentosView extends javax.swing.JDialog {
         jFormattedTextFieldHoraCierre.setSelectionStart(0);
         jFormattedTextFieldHoraCierre.setSelectionEnd(jFormattedTextFieldHoraCierre.getText().length());
     }//GEN-LAST:event_jFormattedTextFieldHoraCierreFocusGained
+
+    private void jComboBoxTiposItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxTiposItemStateChanged
+        if (jComboBoxTipos.getSelectedItem() != null) {
+            if (!jComboBoxTipos.getSelectedItem().toString().equals("Seleccione tipo...")) jLabelObligatorio1.setIcon(null);
+        }
+    }//GEN-LAST:event_jComboBoxTiposItemStateChanged
+
+    private void jComboBoxEmpresasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxEmpresasItemStateChanged
+        if (jComboBoxEmpresas.getSelectedItem() != null) {
+            if (!jComboBoxEmpresas.getSelectedItem().toString().equals("Seleccione empresa...")) jLabelObligatorio2.setIcon(null);
+        }
+    }//GEN-LAST:event_jComboBoxEmpresasItemStateChanged
+
+    private void jComboBoxClientesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxClientesItemStateChanged
+        if (jComboBoxClientes.getSelectedItem() != null) {
+            if (!jComboBoxClientes.getSelectedItem().toString().equals("Seleccione cliente...")) jLabelObligatorio3.setIcon(null);
+        }
+    }//GEN-LAST:event_jComboBoxClientesItemStateChanged
+
+    private void jFormattedTextFieldFechaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jFormattedTextFieldFechaFocusLost
+        if (!jFormattedTextFieldFecha.getText().equals("  /  /    ")) jFormattedTextFieldFecha.setBackground(Color.white);
+    }//GEN-LAST:event_jFormattedTextFieldFechaFocusLost
+
+    private void jFormattedTextFieldHoraFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jFormattedTextFieldHoraFocusLost
+        if (!jFormattedTextFieldHora.getText().equals("  :  ")) jFormattedTextFieldHora.setBackground(Color.white);
+    }//GEN-LAST:event_jFormattedTextFieldHoraFocusLost
 
     private void initComponents2() {
         setTitle((!idDoc.equals("")) ? "Editar Registro [Documentos]" : "Nuevo Registro [Documentos]");
@@ -928,6 +994,9 @@ public class DocumentosView extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelImporteTotal;
+    private javax.swing.JLabel jLabelObligatorio1;
+    private javax.swing.JLabel jLabelObligatorio2;
+    private javax.swing.JLabel jLabelObligatorio3;
     private javax.swing.JLabel jLabelTotalDto;
     private javax.swing.JLabel jLabelTotalNeto;
     private javax.swing.JPanel jPanel1;
@@ -947,7 +1016,7 @@ public class DocumentosView extends javax.swing.JDialog {
     private javax.swing.JTextField jTextFieldPorcentajeIva;
     // End of variables declaration//GEN-END:variables
 
-    private String idDoc;
+    private final String idDoc;
     private Documento documento;
     private Lineas lineas;
     private boolean newReg;
